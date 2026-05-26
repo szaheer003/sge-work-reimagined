@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work Reimagined — SG&E Contact Centre</title>
+<style>
+:root {
+  --paper:    #0f0f17;
+  --paper-2:  #1a1a26;
+  --paper-3:  #1f1f30;
+  --ink:      #e8e8ed;
+  --gold:     #e8631a;
+  --rule:     #2a2a3a;
+  --muted:    #8b8fa4;
+  --slate:    #b8bcce;
+  --deep:     #f7f7f8;
+  --det:      #3080FF;
+  --age:      #2FBF71;
+  --aug:      #8D54FF;
+  --hum:      #8b8fa4;
+  --future-human: #e8631a;
+  --future-ai:    #3a8fd4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:dark}
+body{background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5}
+.container{max-width:1440px;margin:0 auto;padding:2rem 2.5rem}
+@media(max-width:768px){.container{padding:1rem 1rem}}
+
+/* Typography */
+.serif{font-family:Georgia,'Times New Roman',serif}
+.mono{font-family:'SF Mono','Fira Code','Fira Mono',monospace}
+.label{font-family:monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.label-sm{font-family:monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+
+/* Header */
+header{border-bottom:1px solid var(--rule);padding-bottom:1.25rem;margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap}
+.header-title{flex:1}
+.header-eyebrow{font-family:monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+h1{font-family:Georgia,serif;font-size:clamp(26px,4vw,44px);font-weight:500;letter-spacing:-.02em;line-height:1.05;color:var(--deep)}
+h1 em{color:var(--gold);font-style:italic}
+.header-sub{font-family:Georgia,serif;font-size:14px;font-style:italic;color:var(--ink);margin-top:.25rem}
+
+/* Controls */
+.controls{display:flex;justify-content:flex-end;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.btn-ghost{font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--rule);padding:.45rem .8rem;background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s,color .15s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Sections */
+.section{margin-top:1.25rem;border:1px solid var(--rule);background:var(--paper)}
+.section-toggle{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;cursor:pointer;width:100%;text-align:left;background:transparent;border:none;color:var(--ink);transition:background .12s}
+.section-toggle:hover{background:var(--paper-2)}
+.section-toggle-left{display:flex;align-items:flex-start;gap:1rem}
+.section-number{font-family:monospace;font-size:11px;letter-spacing:.2em;color:var(--gold);padding-top:3px;flex-shrink:0}
+.section-title{font-family:Georgia,serif;font-size:22px;font-weight:500;letter-spacing:-.01em;color:var(--ink)}
+.section-desc{font-size:12px;color:var(--muted);margin-top:.2rem}
+.expand-lbl{font-family:monospace;font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);flex-shrink:0}
+.section-body{border-top:1px solid var(--rule);padding:1.5rem;display:none}
+.section-body.open{display:block}
+
+/* Approach section */
+.approach-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+@media(max-width:700px){.approach-grid{grid-template-columns:1fr}}
+.approach-card{border:1px solid var(--rule);padding:1.25rem;background:var(--paper-2)}
+.approach-card h3{font-family:Georgia,serif;font-size:16px;font-weight:500;color:var(--deep);margin-bottom:.5rem}
+.approach-card p{font-size:13px;color:var(--slate);line-height:1.6}
+.archetype-legend{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1.5rem}
+@media(max-width:700px){.archetype-legend{grid-template-columns:1fr 1fr}}
+.arch-item{border:1px solid var(--rule);padding:.9rem 1rem}
+.arch-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.5rem;flex-shrink:0}
+.arch-name{font-family:monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;margin-bottom:.35rem}
+.arch-blurb{font-size:12px;color:var(--muted)}
+.design-principle{border-left:3px solid var(--gold);padding:.75rem 1.25rem;margin-top:1.5rem;background:var(--paper-2)}
+.design-principle p{font-family:Georgia,serif;font-size:15px;font-style:italic;color:var(--ink);line-height:1.6}
+
+/* Approach steps */
+.steps{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem}
+.step{display:flex;gap:1rem;align-items:flex-start}
+.step-num{font-family:monospace;font-size:11px;letter-spacing:.1em;color:var(--gold);flex-shrink:0;padding-top:2px}
+.step-text{font-size:13px;color:var(--slate);line-height:1.6}
+.step-text strong{color:var(--ink)}
+
+/* Overview stats */
+.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:.75rem;margin-bottom:1.5rem}
+@media(max-width:900px){.stats-row{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:500px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+.stat-card{border:1px solid var(--rule);padding:.9rem 1rem;background:var(--paper-2)}
+.stat-value{font-family:Georgia,serif;font-size:28px;font-weight:500;color:var(--gold);line-height:1}
+.stat-label{font-size:11px;color:var(--muted);margin-top:.35rem;line-height:1.3}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:.15rem}
+
+/* Archetype breakdown bar */
+.arch-breakdown{margin-top:1.25rem}
+.arch-bar{display:flex;height:24px;border:1px solid var(--rule);overflow:hidden;border-radius:2px}
+.arch-bar-seg{height:100%;transition:opacity .15s}
+.arch-bar-legend{display:flex;gap:1.5rem;margin-top:.6rem;flex-wrap:wrap}
+.arch-bar-legend-item{display:flex;align-items:center;gap:.4rem;font-size:11px;color:var(--muted)}
+
+/* Filters */
+.filters{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--rule)}
+.filter-group{display:flex;flex-direction:column;gap:.4rem}
+.filter-label{font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.filter-pills{display:flex;gap:.4rem;flex-wrap:wrap}
+.pill{font-family:monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule);padding:.3rem .65rem;cursor:pointer;background:transparent;color:var(--muted);transition:all .12s;border-radius:2px}
+.pill.active{color:var(--ink);border-color:var(--slate)}
+.pill.active[data-arch="DETERMINISTIC"]{border-color:var(--det);color:var(--det);background:rgba(48,128,255,.08)}
+.pill.active[data-arch="AGENTIC"]{border-color:var(--age);color:var(--age);background:rgba(47,191,113,.08)}
+.pill.active[data-arch="AUGMENTED"]{border-color:var(--aug);color:var(--aug);background:rgba(141,84,255,.08)}
+.pill.active[data-arch="HUMAN"]{border-color:var(--hum);color:var(--hum);background:rgba(139,143,164,.08)}
+
+/* Sankey */
+.sankey-wrap{overflow-x:auto;overflow-y:hidden;border:1px solid var(--rule);background:var(--paper-2)}
+#sankey-svg{display:block}
+.sankey-col-label{font-family:monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;fill:var(--muted)}
+
+/* Tooltip */
+.tooltip{position:fixed;background:var(--paper-3);border:1px solid var(--rule);padding:.6rem .8rem;font-size:12px;color:var(--ink);pointer-events:none;opacity:0;transition:opacity .12s;z-index:999;max-width:280px;line-height:1.5}
+.tooltip.visible{opacity:1}
+.tooltip-title{font-weight:600;color:var(--deep);margin-bottom:.2rem}
+.tooltip-arch{font-family:monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+
+/* Future role / AI system cards */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem}
+.card{border:1px solid var(--rule);padding:1.25rem;background:var(--paper-2);transition:border-color .15s}
+.card:hover{border-color:var(--slate)}
+.card-eyebrow{font-family:monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.card-title{font-family:Georgia,serif;font-size:18px;font-weight:500;color:var(--deep);margin-bottom:.25rem}
+.card-role{font-size:13px;color:var(--gold);margin-bottom:.9rem;font-style:italic}
+.card-shift{font-size:13px;color:var(--slate);line-height:1.65;margin-bottom:1rem;white-space:pre-line}
+.card-section{margin-top:.9rem;border-top:1px solid var(--rule);padding-top:.75rem}
+.card-section-label{font-family:monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.tag{display:inline-block;font-size:11px;border:1px solid var(--rule);padding:.2rem .55rem;margin:.2rem .2rem 0 0;color:var(--slate);border-radius:2px}
+.tag.human-tag{border-color:rgba(232,99,26,.3);color:var(--gold)}
+.tag.ai-tag{border-color:rgba(58,143,212,.3);color:#5aa8d8}
+.arch-badge{display:inline-flex;align-items:center;gap:.35rem;font-family:monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .6rem;border-radius:2px}
+.arch-badge.det{background:rgba(48,128,255,.12);color:var(--det);border:1px solid rgba(48,128,255,.3)}
+.arch-badge.age{background:rgba(47,191,113,.12);color:var(--age);border:1px solid rgba(47,191,113,.3)}
+.arch-badge.aug{background:rgba(141,84,255,.12);color:var(--aug);border:1px solid rgba(141,84,255,.3)}
+.arch-badge.hum{background:rgba(139,143,164,.12);color:var(--hum);border:1px solid rgba(139,143,164,.3)}
+
+/* Activity Ledger */
+.ledger-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.ledger-table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.65rem .8rem;text-align:left;border-bottom:1px solid var(--rule);cursor:pointer;white-space:nowrap;background:var(--paper-2)}
+thead th:hover{color:var(--ink)}
+tbody tr{border-bottom:1px solid rgba(42,42,58,.7);transition:background .1s}
+tbody tr:hover{background:var(--paper-2)}
+tbody td{padding:.7rem .8rem;vertical-align:top;color:var(--slate)}
+tbody td:first-child{color:var(--ink);font-weight:500}
+.weight-bar{display:inline-block;height:3px;background:var(--gold);vertical-align:middle;border-radius:1px;margin-left:6px;opacity:.7}
+.future-human{color:var(--gold)}
+.future-ai{color:#5aa8d8}
+.rationale-text{font-size:11px;color:var(--muted);line-height:1.5;max-width:340px}
+
+/* Footer */
+footer{margin-top:2.5rem;padding-top:1.25rem;border-top:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:600px){footer{grid-template-columns:1fr}}
+footer .principle{font-family:Georgia,serif;font-size:15px;font-style:italic;color:var(--ink);line-height:1.6}
+footer .note{font-size:11px;color:var(--muted);line-height:1.6}
+
+/* Highlight row */
+tbody tr.highlighted{background:var(--paper-3)}
+
+/* ── Interim state ── */
+--amber: #e8ab1a;
+.state-toggle-row{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding:.7rem 1rem;background:var(--paper-3);border:1px solid var(--rule);flex-wrap:wrap}
+.state-toggle-label{font-family:monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.state-btn{font-family:monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--rule);padding:.35rem .8rem;background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all .15s}
+.state-btn:hover{border-color:var(--slate);color:var(--slate)}
+.state-btn.active-future{border-color:var(--gold);color:var(--gold);background:rgba(232,99,26,.08)}
+.state-btn.active-interim{border-color:#e8ab1a;color:#e8ab1a;background:rgba(232,171,26,.08)}
+.interim-band{display:flex;align-items:center;gap:.6rem;padding:.55rem .9rem;background:rgba(232,171,26,.06);border:1px solid rgba(232,171,26,.2);margin-bottom:1rem;font-size:12px;color:#b89214}
+.interim-band strong{font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#e8ab1a}
+.compromise-section{margin-top:.9rem;border-top:1px solid rgba(232,171,26,.22);padding-top:.75rem}
+.compromise-label{font-family:monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#e8ab1a;margin-bottom:.55rem;display:flex;align-items:center;gap:.4rem}
+.compromise-item{display:flex;gap:.5rem;align-items:flex-start;font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:.35rem}
+.compromise-item::before{content:"△";color:#e8ab1a;flex-shrink:0;font-size:10px;padding-top:2px}
+.nearterm-section{margin-top:.9rem;border-top:1px solid rgba(47,191,113,.2);padding-top:.75rem}
+.nearterm-label{font-family:monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--age);margin-bottom:.5rem}
+.wait-section{margin-top:.75rem;border-top:1px solid rgba(139,143,164,.15);padding-top:.75rem}
+.wait-label{font-family:monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.list-item-green{display:flex;gap:.45rem;align-items:flex-start;font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:.3rem}
+.list-item-green::before{content:"✓";color:var(--age);flex-shrink:0;font-size:10px;padding-top:2px}
+.list-item-grey{display:flex;gap:.45rem;align-items:flex-start;font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:.3rem}
+.list-item-grey::before{content:"◦";color:var(--muted);flex-shrink:0;font-size:10px;padding-top:2px}
+.transcript-callout{background:var(--paper-2);border-left:3px solid #e8ab1a;padding:.75rem 1.25rem;margin-bottom:1.5rem}
+.transcript-callout p{font-family:Georgia,serif;font-size:14px;font-style:italic;color:var(--slate);line-height:1.65}
+.transcript-callout .src{font-family:monospace;font-size:10px;color:var(--muted);margin-top:.4rem;letter-spacing:.08em}
+.gap-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:1rem}
+.gap-table th{font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.6rem .9rem;text-align:left;border-bottom:1px solid var(--rule);background:var(--paper-2)}
+.gap-table td{padding:.65rem .9rem;border-bottom:1px solid rgba(42,42,58,.6);vertical-align:top;color:var(--slate)}
+.gap-table td:first-child{color:var(--ink);font-weight:500;width:22%}
+.gap-table td:nth-child(2){color:#5aa8d8;width:37%}
+.gap-table td:nth-child(3){color:#e8ab1a;width:41%}
+
+/* ── Maturation journey cards ── */
+.mat-card{border:1px solid var(--rule);background:var(--paper-2);transition:border-color .15s;overflow:hidden}
+.mat-card:hover{border-color:var(--slate)}
+.mat-interim-layer{padding:1.1rem 1.25rem .9rem;background:rgba(232,171,26,.04);border-bottom:none}
+.mat-interim-eyebrow{font-family:monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#e8ab1a;display:flex;align-items:center;gap:.45rem;margin-bottom:.45rem}
+.mat-interim-title{font-family:Georgia,serif;font-size:15px;font-weight:500;color:#c49818;margin-bottom:.25rem}
+.mat-interim-role{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:.7rem}
+.mat-compromises-label{font-family:monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#e8ab1a;margin-bottom:.4rem}
+.mat-arrow{display:flex;align-items:center;gap:.7rem;padding:.45rem 1.25rem;background:var(--paper-3)}
+.mat-arrow-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(232,171,26,.5),rgba(232,99,26,.5))}
+.mat-arrow-label{font-family:monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.mat-arrow-chevron{color:var(--gold);font-size:14px;line-height:1}
+.mat-future-layer{padding:.9rem 1.25rem 1.25rem}
+.mat-future-eyebrow{font-family:monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.45rem;margin-bottom:.45rem}
+.mat-future-title{font-family:Georgia,serif;font-size:18px;font-weight:500;color:var(--deep);margin-bottom:.2rem}
+.mat-future-role-line{font-size:13px;color:var(--gold);font-style:italic;margin-bottom:.85rem}
+.mat-future-shift{font-size:13px;color:var(--slate);line-height:1.65;white-space:pre-line}
+
+/* ── Intent distribution bars ── */
+.intent-bar-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.55rem}
+.intent-label{font-size:12px;color:var(--slate);width:200px;flex-shrink:0}
+.intent-bar-bg{flex:1;height:8px;background:var(--paper-3);border-radius:2px;overflow:hidden}
+.intent-bar-fill{height:100%;border-radius:2px;opacity:.75}
+.intent-pct{font-family:monospace;font-size:10px;color:var(--muted);width:36px;text-align:right;flex-shrink:0}
+.intent-arch-breakdown{font-size:11px;color:var(--muted);margin-left:8px}
+</style>
+</head>
+<body>
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-title" id="tt-title"></div>
+  <div id="tt-body"></div>
+</div>
+
+<div class="container">
+
+<header>
+  <div class="header-title">
+    <p class="header-eyebrow">Work Reimagined — SG&amp;E Contact Centre</p>
+    <h1 class="serif">From Current Roles to the <em>New Workforce</em></h1>
+  </div>
+  <div>
+    <p class="header-sub">Designing the future of work in an agentic gas utility contact centre.</p>
+  </div>
+</header>
+
+<div class="controls">
+  <div style="display:flex;align-items:center;gap:.5rem;padding-right:1rem;margin-right:.5rem;border-right:1px solid var(--rule)">
+    <span style="font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Sankey &amp; Ledger</span>
+    <button class="state-btn active-future" id="global-btn-future" onclick="setGlobalState('FUTURE')">Full Future 2030+</button>
+    <button class="state-btn" id="global-btn-interim" onclick="setGlobalState('INTERIM')">Near-Term 2026–28</button>
+  </div>
+  <button class="btn-ghost" id="expand-all">Expand All</button>
+  <button class="btn-ghost" id="collapse-all">Collapse All</button>
+</div>
+
+<!-- SECTION 01 -->
+<section class="section">
+  <button class="section-toggle" data-section="approach">
+    <div class="section-toggle-left">
+      <span class="section-number mono">01</span>
+      <div>
+        <div class="section-title serif">Approach &amp; Rationale</div>
+        <div class="section-desc">A structured model for reimagining contact centre work in a CPUC-regulated agentic gas utility.</div>
+      </div>
+    </div>
+    <span class="expand-lbl mono">Expand</span>
+  </button>
+  <div class="section-body" id="body-approach">
+    <div class="approach-grid">
+      <div class="approach-card">
+        <h3 class="serif">The Core Question</h3>
+        <p>SG&amp;E's contact centre handles millions of contacts a year — the majority of which follow predictable, structured patterns: bill queries, start/stop service, outage status, payment arrangements. Agentic AI can contain most of this volume autonomously.<br><br>The methodology starts with the work itself, not the technology. What does the contact centre actually do — and how much judgment, regulatory accountability, or human empathy does each activity genuinely require?</p>
+      </div>
+      <div class="approach-card">
+        <h3 class="serif">Why Gas Utility is Different</h3>
+        <p>Unlike most contact centres, a gas utility operates under CPUC regulation and DOT Part 192 safety obligations. Emergency calls — gas leaks, carbon monoxide, pressure anomalies — are non-delegable by law. Medical Baseline customers carry legal protection thresholds. Hardship disconnections carry political and reputational risk.<br><br>The redesign must honour these constraints. Not every activity can be automated, and the ones that cannot are often the most consequential.</p>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num mono">01 →</span>
+        <div class="step-text"><strong>Decompose current roles into activities.</strong> Map every meaningful unit of work performed across the SG&E contact centre — from billing calls and service orders to emergency dispatch and programme enrolment. Assign a relative effort weight (1–10 scale) informed by contact volume data.</div>
+      </div>
+      <div class="step">
+        <span class="step-num mono">02 →</span>
+        <div class="step-text"><strong>Assign each activity an automation archetype.</strong> Four patterns cover the full range: Deterministic (rules-based, zero judgment), Agentic AI (reasoning, multi-step, tool-using), Human + AI Augmented (AI proposes, human decides), and Human-led (judgment, regulatory accountability, safety). CPUC and DOT Part 192 obligations constrain archetype assignment on safety-critical activities.</div>
+      </div>
+      <div class="step">
+        <span class="step-num mono">03 →</span>
+        <div class="step-text"><strong>Map activities to future state targets.</strong> Each activity flows to either a future human role (redefined around judgment and accountability) or an AI system (purpose-built for a specific task domain). Agentic and Augmented activities split across both — 70% to AI systems, 30% to human oversight roles.</div>
+      </div>
+      <div class="step">
+        <span class="step-num mono">04 →</span>
+        <div class="step-text"><strong>Derive the new SG&E workforce model.</strong> Future human roles are purpose-built for what AI cannot own — emergency response, financial hardship judgment, Medical Baseline accountability, commercial specialist decisions. The result is a smaller, more senior human team working alongside capable, gas-utility-specific AI agents.</div>
+      </div>
+    </div>
+
+    <div class="archetype-legend" style="margin-top:1.75rem">
+      <div class="arch-item">
+        <div class="arch-name mono"><span class="arch-dot" style="background:var(--det)"></span>Deterministic</div>
+        <div class="arch-blurb">Rules-based, high-volume, structured. Defined inputs and outputs. No judgment required. Maps entirely to AI systems.</div>
+      </div>
+      <div class="arch-item">
+        <div class="arch-name mono"><span class="arch-dot" style="background:var(--age)"></span>Agentic AI</div>
+        <div class="arch-blurb">Reasoning across context, tools, and data to produce outputs. Multi-step. 70% flows to AI systems; 30% to human oversight roles.</div>
+      </div>
+      <div class="arch-item">
+        <div class="arch-name mono"><span class="arch-dot" style="background:var(--aug)"></span>Human + AI Augmented</div>
+        <div class="arch-blurb">AI produces the first draft, proposes the next step, or assembles the evidence. Human decides, adjusts, and owns the outcome.</div>
+      </div>
+      <div class="arch-item">
+        <div class="arch-name mono"><span class="arch-dot" style="background:var(--hum)"></span>Human-led</div>
+        <div class="arch-blurb">Judgment, accountability, empathy. Vulnerable customers, policy exceptions, regulatory decisions. Cannot be delegated to a model.</div>
+      </div>
+    </div>
+
+    <div class="design-principle">
+      <p>"The goal is not automating gas utility contact centre roles. It is redesigning the contact centre around what AI can fully own, what it can prepare for a human, and what only a human can ever answer for — especially when safety, vulnerability, or regulatory accountability is on the line."</p>
+    </div>
+
+    <div style="margin-top:1.75rem">
+      <div class="label" style="margin-bottom:.9rem">Assumed Contact Intent Distribution — Relative Effort Weights (34 Activities, 7 Clusters)</div>
+      <div class="intent-bar-row">
+        <span class="intent-label">Billing &amp; Payments</span>
+        <div class="intent-bar-bg"><div class="intent-bar-fill" style="width:100%;background:#3080FF"></div></div>
+        <span class="intent-pct">24%</span>
+        <span class="intent-arch-breakdown">7 activities · Deterministic &amp; Agentic · incl. high bill investigation</span>
+      </div>
+      <div class="intent-bar-row">
+        <span class="intent-label">Start / Stop / Transfer</span>
+        <div class="intent-bar-bg"><div class="intent-bar-fill" style="width:69%;background:#3080FF"></div></div>
+        <span class="intent-pct">16%</span>
+        <span class="intent-arch-breakdown">5 activities · predominantly Deterministic · highest AI containment potential</span>
+      </div>
+      <div class="intent-bar-row">
+        <span class="intent-label">Quality &amp; Operations</span>
+        <div class="intent-bar-bg"><div class="intent-bar-fill" style="width:63%;background:#8D54FF"></div></div>
+        <span class="intent-pct">15%</span>
+        <span class="intent-arch-breakdown">6 activities · Agentic &amp; Augmented · internal / support layer</span>
+      </div>
+      <div class="intent-bar-row">
+        <span class="intent-label">Gas Safety &amp; Emergencies</span>
+        <div class="intent-bar-bg"><div class="intent-bar-fill" style="width:53%;background:#8b8fa4"></div></div>
+        <span class="intent-pct">12%</span>
+        <span class="intent-arch-breakdown">4 activities · CPUC / DOT Part 192 regulated · 2 permanently Human-led</span>
+      </div>
+      <div class="intent-bar-row">
+        <span class="intent-label">Outage &amp; Restoration</span>
+        <div class="intent-bar-bg"><div class="intent-bar-fill" style="width:53%;background:#3080FF"></div></div>
+        <span class="intent-pct">12%</span>
+        <span class="intent-arch-breakdown">4 activities · Deterministic · pilot relight is highest-volume single contact type</span>
+      </div>
+      <div class="intent-bar-row">
+        <span class="intent-label">Assistance Programs</span>
+        <div class="intent-bar-bg"><div class="intent-bar-fill" style="width:43%;background:#8D54FF"></div></div>
+        <span class="intent-pct">10%</span>
+        <span class="intent-arch-breakdown">4 activities · Augmented &amp; Human-led · CARE/FERA, Medical Baseline, HEAP</span>
+      </div>
+      <div class="intent-bar-row">
+        <span class="intent-label">Account &amp; Meters</span>
+        <div class="intent-bar-bg"><div class="intent-bar-fill" style="width:43%;background:#8D54FF"></div></div>
+        <span class="intent-pct">10%</span>
+        <span class="intent-arch-breakdown">4 activities · Deterministic, Agentic &amp; Human-led · incl. commercial construction</span>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:.75rem">Weights are relative effort estimates (1–10 scale) informed by SoCalGas contact volume benchmarks. Percentages represent share of total effort, not raw contact volume. Emergency activities are weighted on resolution complexity, not frequency.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 02 -->
+<section class="section">
+  <button class="section-toggle" data-section="overview">
+    <div class="section-toggle-left">
+      <span class="section-number mono">02</span>
+      <div>
+        <div class="section-title serif">Overview &amp; Workforce Metrics</div>
+        <div class="section-desc">Summary of role transformation, activity distribution, and automation potential.</div>
+      </div>
+    </div>
+    <span class="expand-lbl mono">Expand</span>
+  </button>
+  <div class="section-body" id="body-overview">
+    <div class="stats-row" id="stats-row"></div>
+
+    <div class="arch-breakdown">
+      <div class="label" style="margin-bottom:.6rem">Activity Effort by Automation Archetype</div>
+      <div class="arch-bar" id="arch-bar"></div>
+      <div class="arch-bar-legend" id="arch-bar-legend"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 03 -->
+<section class="section">
+  <button class="section-toggle" data-section="flow">
+    <div class="section-toggle-left">
+      <span class="section-number mono">03</span>
+      <div>
+        <div class="section-title serif">Current to Future State Mapping</div>
+        <div class="section-desc">The end-to-end flow from current roles through activities and archetypes to the new workforce.</div>
+      </div>
+    </div>
+    <span class="expand-lbl mono">Expand</span>
+  </button>
+  <div class="section-body" id="body-flow">
+    <div class="filters">
+      <div class="filter-group">
+        <span class="filter-label mono">Archetype</span>
+        <div class="filter-pills" id="arch-pills"></div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label mono">Current Role</span>
+        <div class="filter-pills" id="role-pills"></div>
+      </div>
+    </div>
+    <div style="margin-top:1rem" class="sankey-wrap">
+      <svg id="sankey-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:.75rem">Flow widths represent relative share of work. Hover any node or flow for detail. Agentic and Augmented activities split 70% to AI systems / 30% to human oversight roles.</p>
+  </div>
+</section>
+
+<!-- SECTION 04 -->
+<section class="section">
+  <button class="section-toggle" data-section="roles">
+    <div class="section-toggle-left">
+      <span class="section-number mono">04</span>
+      <div>
+        <div class="section-title serif">Future Role Anatomy</div>
+        <div class="section-desc">Each card shows the role's near-term interim identity and how it matures into the full future design.</div>
+      </div>
+    </div>
+    <span class="expand-lbl mono">Expand</span>
+  </button>
+  <div class="section-body" id="body-roles">
+    <div class="cards-grid" id="role-cards"></div>
+  </div>
+</section>
+
+<!-- SECTION 05 -->
+<section class="section">
+  <button class="section-toggle" data-section="systems">
+    <div class="section-toggle-left">
+      <span class="section-number mono">05</span>
+      <div>
+        <div class="section-title serif">Future AI Systems</div>
+        <div class="section-desc">Each card shows near-term deployment scope and how the system expands to full capability.</div>
+      </div>
+    </div>
+    <span class="expand-lbl mono">Expand</span>
+  </button>
+  <div class="section-body" id="body-systems">
+    <div class="cards-grid" id="system-cards"></div>
+  </div>
+</section>
+
+<!-- SECTION 06 -->
+<section class="section">
+  <button class="section-toggle" data-section="ledger">
+    <div class="section-toggle-left">
+      <span class="section-number mono">06</span>
+      <div>
+        <div class="section-title serif">Activity Ledger</div>
+        <div class="section-desc">Every contact centre activity, its automation archetype, and the logic behind it.</div>
+      </div>
+    </div>
+    <span class="expand-lbl mono">Expand</span>
+  </button>
+  <div class="section-body" id="body-ledger">
+    <div class="ledger-filters">
+      <button class="pill active" data-ledger-arch="ALL">All Activities</button>
+      <button class="pill active" data-ledger-arch="DETERMINISTIC">Deterministic</button>
+      <button class="pill active" data-ledger-arch="AGENTIC">Agentic AI</button>
+      <button class="pill active" data-ledger-arch="AUGMENTED">Human + AI Augmented</button>
+      <button class="pill active" data-ledger-arch="HUMAN">Human-led</button>
+    </div>
+    <div class="ledger-table-wrap">
+      <table id="ledger-table">
+        <thead>
+          <tr>
+            <th data-sort="name">Activity</th>
+            <th data-sort="roles">Current Role(s)</th>
+            <th data-sort="arch">Archetype</th>
+            <th data-sort="future">Future Home</th>
+            <th data-sort="weight">Weight</th>
+            <th>Rationale</th>
+          </tr>
+        </thead>
+        <tbody id="ledger-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 07 -->
+<section class="section">
+  <button class="section-toggle" data-section="vision">
+    <div class="section-toggle-left">
+      <span class="section-number mono">07</span>
+      <div>
+        <div class="section-title serif">SG&amp;E's Vision &amp; the Interim Gap</div>
+        <div class="section-desc">What the near-term programme can deliver vs. the 2030 vision in the SG&amp;E transcript — and what bridges the gap.</div>
+      </div>
+    </div>
+    <span class="expand-lbl mono">Expand</span>
+  </button>
+  <div class="section-body" id="body-vision">
+    <div class="transcript-callout">
+      <p>"Let's imagine it's 2030 with agentic AI. People have sophisticated AI agents that interact with other AI agents and brands on their behalf... Ella's AI agent connects with the Element Energy AI agent. They authenticate each other securely and exchange necessary information with Ella's consent. The utility agent crafts a personalized energy package... the entire process was managed digitally, saving Ella time and stress."</p>
+      <div class="src">SG&amp;E / Element Energy — Agentic AI Vision Video Transcript</div>
+    </div>
+
+    <div class="approach-grid" style="margin-bottom:1.5rem">
+      <div class="approach-card">
+        <h3 class="serif">What the Transcript Tells Us</h3>
+        <p>The video frames SG&E's 2030 ambition as <strong style="color:var(--ink)">AI-to-AI agent commerce</strong> — a customer's personal AI agent negotiates with SG&E's utility AI agent, handling a full move-in autonomously: energy preferences, package personalisation, EV charger installation, and battery storage activation, all without the customer lifting a finger beyond initial consent.<br><br>This is not an incremental upgrade to the contact centre. It is a fundamentally different service model built on three capabilities SG&E does not yet have: AI-to-AI authentication protocols, life-event detection from external signals, and personalised energy package assembly across full home profile data.</p>
+      </div>
+      <div class="approach-card">
+        <h3 class="serif">The Interim as Foundation, Not Compromise</h3>
+        <p>The near-term programme (2026–2028) builds the infrastructure the 2030 vision requires. Containment of high-volume contacts through the Service Transactions Engine and Outage Agent establishes AI reliability at scale. Payment Agent deployment builds trust in AI-led financial conversations. Quality scoring builds the regulatory evidence base for AI compliance.<br><br>Each interim deployment is not a lesser version of the vision — it is a proof point that earns the organisational and regulatory permission to take the next step. The transcript's "simple, personalized, seamless" principle applies at every stage.</p>
+      </div>
+    </div>
+
+    <div class="label" style="margin-bottom:.75rem">Full Future Vision vs. Near-Term Interim — Capability Gap</div>
+    <table class="gap-table">
+      <thead>
+        <tr>
+          <th>Capability Domain</th>
+          <th>Full Future — 2030+ (Transcript Vision)</th>
+          <th>Near-Term Interim — 2026–2028 (What to Build Now)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Service Initiation</td>
+          <td>Customer AI agent triggers service start autonomously upon home purchase detection — zero inbound contact</td>
+          <td>AI handles structured move-in service start across IVR/digital/chat when customer initiates — 24/7 containment of the largest-volume contact type</td>
+        </tr>
+        <tr>
+          <td>Personalisation</td>
+          <td>Utility AI crafts a personalised energy package combining historical usage, new home features, EV charger, and battery storage in one seamless transaction</td>
+          <td>AI retrieves usage history and rate options; human Energy Advisor (Billing & Programs Specialist) reviews and presents personalised recommendations</td>
+        </tr>
+        <tr>
+          <td>AI Interaction Model</td>
+          <td>AI-to-AI agent authentication and commerce — customer's personal AI agent holds the relationship on their behalf</td>
+          <td>AI handles inbound contacts from human customers across digital and voice channels — no agent-to-agent protocol in near term</td>
+        </tr>
+        <tr>
+          <td>Life Event Detection</td>
+          <td>Utility AI detects home purchase from external data signals and proactively initiates service transfer workflow</td>
+          <td>Proactive outreach for CARE eligibility and high bill alerts (based on internal data) — external life event signals are beyond near-term scope</td>
+        </tr>
+        <tr>
+          <td>Connected Home Integration</td>
+          <td>EV charger installation, battery storage activation, and smart home preferences managed as part of the service transaction</td>
+          <td>No connected home or hardware integration — service transactions remain limited to gas supply start/stop/transfer</td>
+        </tr>
+        <tr>
+          <td>Emergency &amp; Safety</td>
+          <td>Human-led by regulation — no change at either time horizon</td>
+          <td>Human-led by regulation — Safety &amp; Emergency Response Coordinator is at full capability from Day 1</td>
+        </tr>
+        <tr>
+          <td>Financial Hardship</td>
+          <td>Customer Outcome Manager owns unified jurisdiction — AI fully owns standard cases, human owns all exceptions</td>
+          <td>Complex Case Specialist handles most hardship manually with AI-generated summaries — AI owns only the most clearly bounded cases</td>
+        </tr>
+        <tr>
+          <td>Quality &amp; Compliance</td>
+          <td>100% AI-scored interactions; CPUC regulatory reports generated by AI; coach role is calibration and development only</td>
+          <td>50–70% AI scoring; CPUC emergency script flagging is human-reviewed; QA team of 2–3 analysts continues alongside AI copilot</td>
+        </tr>
+        <tr>
+          <td>Operations Intelligence</td>
+          <td>AI forecasts demand, optimises schedules in real time, and surfaces call driver root causes continuously</td>
+          <td>Automated KPI dashboards and WFM tool scheduling replace manual production — true AI forecasting requires 18+ months of AI-impacted contact data</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="design-principle" style="margin-top:1.5rem">
+      <p>"We're not waiting for the business to evolve so we can respond. We're helping shape what's possible." — The near-term programme is not a compromise of this ambition. It is the proof-of-concept that makes the 2030 vision credible.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="principle serif">"At a gas utility, the contact centre is not just a cost centre — it is the public face of a safety-critical infrastructure. The future workforce must be smaller, more senior, and more consequential: human agents who hold the line on the decisions that matter most."</p>
+  <p class="note">Activity weights are indicative effort estimates (1–10 scale) based on contact volume data for California gas utilities. Flow widths represent relative share of work effort. Hover nodes and flows for detail. Agentic and Augmented activities split 70% to AI systems / 30% to human oversight roles. HUMAN archetype activities reflect CPUC, DOT Part 192, or medical/vulnerability obligations. All transitions are subject to process redesign, regulatory review, change management, and technology readiness assessment.</p>
+</footer>
+
+</div><!-- /container -->
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const ARCHETYPES = {
+  DETERMINISTIC: { label: "Deterministic",        color: "#3080FF", blurb: "Rules-based, high-volume, structured" },
+  AGENTIC:       { label: "Agentic AI",            color: "#2FBF71", blurb: "Reasoning, multi-step, tool-using" },
+  AUGMENTED:     { label: "Human + AI Augmented",  color: "#8D54FF", blurb: "AI drafts, human decides" },
+  HUMAN:         { label: "Human-led",             color: "#8b8fa4", blurb: "Judgment, relationships, accountability" }
+};
+
+const CURRENT_ROLES = [
+  "Contact Centre Director",
+  "Team Leader / Supervisor",
+  "Tier 1 — Billing & Account CSR",
+  "Tier 1 — Start / Stop / Transfer CSR",
+  "Tier 1 — Emergency & Safety CSR",
+  "Tier 1 — Outage & Restoration CSR",
+  "Tier 1 — Digital Channel CSR",
+  "Tier 2 — Collections & Credit Specialist",
+  "Tier 2 — High Bill & Meter Specialist",
+  "Tier 2 — Assistance Programs Specialist",
+  "Tier 2 — Commercial & Construction Specialist",
+  "Tier 2 — Escalations & Complaints Specialist",
+  "Tier 2 — Safety Order Coordinator",
+  "QA & Compliance Analyst",
+  "Workforce Management Analyst",
+  "Knowledge & Training Specialist",
+  "MI & Reporting Analyst"
+];
+
+const FUTURE_ROLES = {
+  SAFETY_EMERGENCY_COORD: {
+    key: "SAFETY_EMERGENCY_COORD",
+    title: "Safety & Emergency Response Coordinator",
+    theRole: "Owns all gas emergency and carbon monoxide calls, safety order dispatch, and post-incident closure",
+    theShift: "Consolidates today's Tier 1 Emergency & Safety CSR and Tier 2 Safety Order Coordinator. The AI provides real-time GIS overlays, nearest crew availability, OMS incident data, and scripted safety protocols in real time — but regulatory compliance (CPUC, DOT Part 192) and the customer safety conversation are non-delegable.\n\nThis role is permanently human-led. It becomes more senior, more specialised, and more consequential — not smaller. Success is measured in response time, incident closure rate, and zero regulatory breaches."
+  },
+  CUSTOMER_OUTCOME_MGR: {
+    key: "CUSTOMER_OUTCOME_MGR",
+    title: "Customer Outcome Manager",
+    theRole: "Owns escalated financial conversations, vulnerable customer cases, and high-stakes resolutions",
+    theShift: "Today's Tier 2 Collections & Credit Specialist, Escalations & Complaints Specialist, and Team Leader each touch the cases where things go wrong — in separate queues, with limited visibility across the customer's full history. The Customer Outcome Manager consolidates this into one role with full authority.\n\nAI handles standard payment arrangements and status updates. The Customer Outcome Manager takes over when the outcome affects a customer's financial stability, medical safety, or formal complaint standing. Measured on resolution quality and CPUC complaint avoidance, not contact volume."
+  },
+  ENERGY_ADVISOR: {
+    key: "ENERGY_ADVISOR",
+    title: "Energy Advisor",
+    theRole: "Guides customers through complex billing investigations, assistance programme enrolment, and energy cost decisions",
+    theShift: "Absorbs the Tier 2 High Bill & Meter Specialist and Tier 2 Assistance Programs Specialist. The High Bill Analysis Agent and Assistance Program Navigator handle the investigation and screening work; the Energy Advisor interprets findings, owns the recommendation, and manages the human conversation on sensitive affordability topics.\n\nMedical Baseline and Life Support enrollments remain human-led by regulation. This role becomes the trusted adviser on a customer's energy financial wellbeing — not a case processor."
+  },
+  COMMERCIAL_CONSTRUCTION_SPEC: {
+    key: "COMMERCIAL_CONSTRUCTION_SPEC",
+    title: "Commercial & Construction Specialist",
+    theRole: "Manages commercial account relationships, rate code decisions, new construction service, and field coordination",
+    theShift: "This role survives the AI transition not because it was protected, but because its work genuinely requires specialist knowledge and cross-functional ownership. Rate code analysis and commercial billing AI supports the decision — the Specialist owns it.\n\nNew construction line extensions involve infrastructure design, permit applications, and multi-party coordination with SG&E engineering, field operations, and external contractors. This is irreducibly human. The role absorbs post-emergency safety order coordination from the Safety Order Coordinator, gaining a broader field operations lens."
+  },
+  AI_OPS_ORCHESTRATOR: {
+    key: "AI_OPS_ORCHESTRATOR",
+    title: "AI Operations Orchestrator",
+    theRole: "Governs the AI agent infrastructure — containment thresholds, exception logic, queue policy, and continuous improvement",
+    theShift: "A genuinely new role created by the automation itself. WFM Analysts, Team Leaders, and MI Analysts each had fragments of operational management. The AI Ops Orchestrator supervises the systems that now run those functions — owning the escalation thresholds, model performance, queue routing logic, and the feedback loop that continuously improves AI accuracy.\n\nThis role is the operational conscience of the AI layer. It does not handle customers; it governs the agents that do. Measured in containment rate, automation accuracy, and unhandled exception reduction."
+  },
+  QUALITY_COMPLIANCE_COACH: {
+    key: "QUALITY_COMPLIANCE_COACH",
+    title: "Quality & Compliance Coach",
+    theRole: "Leads AI-scored quality programmes, CPUC compliance monitoring, and agent capability development",
+    theShift: "Today's QA & Compliance Analyst scores a small sample of interactions and writes coaching notes on limited evidence. The Quality & Compliance Coach inherits a pipeline of AI-scored interactions across 100% of contacts — and their job becomes calibration, regulatory judgement, and targeted coaching on the cases the Quality & Compliance Intelligence flags as complex, non-compliant, or high-risk.\n\nCPUC-required emergency call script compliance, DOT Part 192 protocols, and payment arrangement regulations are monitored continuously. This role is also the gatekeeper for knowledge base quality — every SOP update flows through here."
+  }
+};
+
+const AI_SYSTEMS = {
+  SYS_HIGH_BILL_AGENT: {
+    key: "SYS_HIGH_BILL_AGENT",
+    title: "High Bill Analysis Agent",
+    archetype: "AGENTIC",
+    theRole: "Investigates high bill complaints end-to-end: usage history, weather normalisation, rate audit, and meter anomaly detection",
+    theShift: "Retrieves 13-month usage history, cross-references Heating Degree Days (HDD), compares to similar-usage neighbours, audits rate code and estimated bill history, and flags likely causes — weather, rate change, appliance fault, or meter anomaly. For clear-cut cases, it closes the inquiry and generates a customer-facing explanation. For borderline meter test candidates, it escalates to the Energy Advisor with a pre-built case file. Eliminates the most time-consuming Tier 2 queue in most gas utility contact centres."
+  },
+  SYS_PAYMENT_AGENT: {
+    key: "SYS_PAYMENT_AGENT",
+    title: "Payment & Collections Agent",
+    archetype: "AGENTIC",
+    theRole: "Handles payment processing, standard arrangement setup, deposit assessment, disconnection workflows, and restoration orders",
+    theShift: "Authenticates, pulls account history, calculates arrangement terms within SG&E's credit policy, presents options, documents the plan, and schedules reminders — end-to-end for standard cases. For disconnection workflows, it confirms notice status, validates reconnection eligibility, and initiates service orders. Escalates to the Customer Outcome Manager when hardship signals, Medical Baseline flags, vulnerability markers, or balance thresholds are triggered."
+  },
+  SYS_SERVICE_ENGINE: {
+    key: "SYS_SERVICE_ENGINE",
+    title: "Service Transactions Engine",
+    archetype: "DETERMINISTIC",
+    theRole: "Processes all structured service orders: new starts, stops, transfers, budget billing, account updates, and meter reads",
+    theShift: "The highest-containment AI system in the contact centre. New residential service (SG&E's single largest contact driver), move-outs, service transfers, account updates, and Budget Billing enrollment are all deterministic service orders — defined inputs, defined CIS write-backs, zero judgment required. Operates 24/7 across IVR, digital, and chat. The AI Ops Orchestrator monitors throughput, exception rates, and CIS integration health."
+  },
+  SYS_OUTAGE_AGENT: {
+    key: "SYS_OUTAGE_AGENT",
+    title: "Outage & Restoration Agent",
+    archetype: "AGENTIC",
+    theRole: "Handles gas outage status, pilot relight scheduling, OMS-based crew dispatch coordination, and safety order tracking",
+    theShift: "With real-time OMS and GIS integration, this agent confirms active outages, delivers restoration ETAs, books pilot relight appointments, initiates restoration service orders post-payment, and tracks open safety field orders. For the most common 'no gas' contact — pilot relight — it handles end-to-end in under 90 seconds. The Safety & Emergency Response Coordinator uses it as a live operational dashboard for emergency dispatch. The AI Ops Orchestrator monitors order closure rates and OMS sync health."
+  },
+  SYS_ASSISTANCE_NAVIGATOR: {
+    key: "SYS_ASSISTANCE_NAVIGATOR",
+    title: "Assistance Program Navigator",
+    archetype: "AUGMENTED",
+    theRole: "Screens eligibility and guides enrolment for CARE, FERA, HEAP, weatherization, and affordability programmes",
+    theShift: "Guides customers through household size and income eligibility checks, pre-fills programme applications, identifies multiple programme stacking opportunities, and coordinates third-party HEAP agency warm handoffs. The Energy Advisor takes over for edge cases — self-employment income, complex household composition, dual-fuel coordination. Medical Baseline and Life Support program setup remains a human-led activity by regulatory design."
+  },
+  SYS_QUALITY_COMPLIANCE: {
+    key: "SYS_QUALITY_COMPLIANCE",
+    title: "Quality & Compliance Intelligence",
+    archetype: "AGENTIC",
+    theRole: "Scores 100% of interactions against CPUC regulations, DOT Part 192 emergency scripts, and internal quality rubrics",
+    theShift: "Replaces sample-based manual QA with comprehensive, always-on monitoring. Scores every interaction against mandatory emergency call protocols, payment arrangement compliance standards, and internal quality criteria. Surfaces targeted coaching flags, drafts complaint investigation summaries, and generates CPUC-reportable metrics automatically. The Quality & Compliance Coach reviews flagged interactions, calibrates scoring criteria against emerging patterns, and owns regulatory reporting sign-off."
+  },
+  SYS_OPS_INTELLIGENCE: {
+    key: "SYS_OPS_INTELLIGENCE",
+    title: "Operations Intelligence Suite",
+    archetype: "DETERMINISTIC",
+    theRole: "Runs contact forecasting, schedule optimisation, intraday adherence, KPI dashboards, and call driver analytics continuously",
+    theShift: "Removes the manual cycle from workforce management and reporting. Generates forecasts, builds schedules, monitors intraday adherence, rebalances queues, and produces operational dashboards always-on. Call driver analytics are updated in real time rather than in weekly reports. The AI Ops Orchestrator sets policy thresholds and interprets performance signals; the system executes. Absorbs the WFM Analyst's daily cycle and the MI Analyst's reporting production entirely."
+  }
+};
+
+const ACTIVITIES = [
+  // CLUSTER 1 — BILLING & PAYMENTS
+  { id:"g1",  name:"Bill explanation & charge breakdown (standard)", roles:["Tier 1 — Billing & Account CSR","Tier 1 — Digital Channel CSR"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_SERVICE_ENGINE", weight:9, rationale:"Standard billing inquiries — rate component breakdown, usage calculation, charge identification — are structured lookups against the CIS. The Service Transactions Engine retrieves and narrates in seconds across any channel. The AI Ops Orchestrator owns containment rate and accuracy." },
+  { id:"g2",  name:"High bill investigation — usage, weather & rate analysis", roles:["Tier 1 — Billing & Account CSR","Tier 2 — High Bill & Meter Specialist"], arch:"AGENTIC", future:"ENERGY_ADVISOR", futureSystem:"SYS_HIGH_BILL_AGENT", weight:8, rationale:"The High Bill Analysis Agent retrieves 13-month usage history, cross-references Heating Degree Days (HDD), compares to similar-usage neighbours, and flags the most likely cause: appliance change, rate code anomaly, estimated read, or weather event. The Energy Advisor reviews the finding and decides on credit, meter test, or programme referral." },
+  { id:"g3",  name:"Payment processing & AutoPay enrollment", roles:["Tier 1 — Billing & Account CSR","Tier 1 — Digital Channel CSR"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_SERVICE_ENGINE", weight:8, rationale:"One-time payment and AutoPay setup are structured transactions with no judgment required. The Service Transactions Engine handles authentication, payment method capture, CIS write-back, and confirmation end-to-end." },
+  { id:"g4",  name:"Standard payment arrangement setup (within policy)", roles:["Tier 2 — Collections & Credit Specialist"], arch:"AGENTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_PAYMENT_AGENT", weight:7, rationale:"The Payment & Collections Agent pulls account history, applies SG&E's credit policy rules, calculates eligible terms, presents the plan, documents the arrangement, and schedules payment reminders. Standard first-arrangement cases — balance within threshold, no prior defaults — are end-to-end automatable." },
+  { id:"g5",  name:"Hardship negotiation & broken arrangement recovery", roles:["Tier 2 — Collections & Credit Specialist","Team Leader / Supervisor"], arch:"AUGMENTED", future:"CUSTOMER_OUTCOME_MGR", futureSystem:"SYS_PAYMENT_AGENT", weight:6, rationale:"The Payment Agent assembles account history, prior arrangement record, and maximum eligible terms. The Customer Outcome Manager applies judgment on exceptions — income-based hardship, vulnerable household, large outstanding balance. The agent proposes; the human decides and owns the outcome." },
+  { id:"g6",  name:"Disconnection notice management & reconnection authorisation", roles:["Tier 2 — Collections & Credit Specialist"], arch:"AUGMENTED", future:"CUSTOMER_OUTCOME_MGR", futureSystem:"SYS_PAYMENT_AGENT", weight:6, rationale:"AI confirms payment receipt, validates reconnection eligibility, and initiates the service order. The Customer Outcome Manager handles cases where vulnerable customer flags are active, the disconnection is disputed, or CPUC regulations require human sign-off before service interruption." },
+  { id:"g7",  name:"Estimated bill dispute & meter read reconciliation", roles:["Tier 2 — High Bill & Meter Specialist"], arch:"AGENTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_HIGH_BILL_AGENT", weight:5, rationale:"The High Bill Analysis Agent retrieves estimation history, identifies the estimation methodology used, calculates the implied true-up against available actual reads, and initiates the billing correction. Escalates to the Energy Advisor only if a meter test is warranted based on anomaly patterns." },
+
+  // CLUSTER 2 — START / STOP / TRANSFER
+  { id:"g8",  name:"New residential service start (move-in)", roles:["Tier 1 — Start / Stop / Transfer CSR"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_SERVICE_ENGINE", weight:9, rationale:"New residential service is the single highest-volume contact driver at SG&E. Authentication, date selection, deposit calculation, identity verification, and CIS service order creation are all deterministic. The Service Transactions Engine handles end-to-end across IVR, digital, and chat — 24/7." },
+  { id:"g9",  name:"Service stop / move-out processing", roles:["Tier 1 — Start / Stop / Transfer CSR"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_SERVICE_ENGINE", weight:8, rationale:"Move-out is a structured service order: stop date, final meter read scheduling, final bill instructions, forwarding address capture. No judgment required. The Service Transactions Engine writes back to CIS and confirms without human intervention." },
+  { id:"g10", name:"Service transfer between addresses", roles:["Tier 1 — Start / Stop / Transfer CSR"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_SERVICE_ENGINE", weight:7, rationale:"A transfer chains a stop order to a start order in one interaction: dates, addresses, deposit re-assessment, dual order creation. Fully deterministic. The Service Transactions Engine executes both legs in the same session." },
+  { id:"g11", name:"Deposit calculation, waiver review & credit assessment", roles:["Tier 1 — Start / Stop / Transfer CSR","Tier 2 — Collections & Credit Specialist"], arch:"AGENTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_PAYMENT_AGENT", weight:5, rationale:"The Payment Agent pulls credit history, prior SG&E account record, and applies deposit policy rules to calculate the required deposit and flag waiver eligibility. Standard cases are decided and documented automatically. Escalates to Collections & Credit Specialist only when waiver requires discretionary judgment." },
+  { id:"g12", name:"Commercial / new construction service initiation", roles:["Tier 2 — Commercial & Construction Specialist"], arch:"AUGMENTED", future:"COMMERCIAL_CONSTRUCTION_SPEC", futureSystem:"SYS_SERVICE_ENGINE", weight:5, rationale:"AI gathers address, meter configuration, and load requirements and drafts the service order. The Commercial & Construction Specialist applies judgment on rate code assignment, infrastructure requirements, and field coordination — which require specialist knowledge and cross-functional ownership that no model can replicate." },
+
+  // CLUSTER 3 — GAS SAFETY & EMERGENCIES
+  { id:"g13", name:"Gas leak / odour report — triage & emergency crew dispatch", roles:["Tier 1 — Emergency & Safety CSR"], arch:"HUMAN", future:"SAFETY_EMERGENCY_COORD", futureSystem:null, weight:8, rationale:"Non-delegable by regulation. CPUC and DOT Part 192 mandate a trained human agent own all gas emergency calls — assessing the nature of the leak, advising on immediate safety actions (evacuate, no ignition sources), and authorising emergency field crew dispatch. AI provides real-time GIS overlays and script compliance guidance; the human stays on the line." },
+  { id:"g14", name:"Carbon monoxide alarm & symptom response", roles:["Tier 1 — Emergency & Safety CSR"], arch:"HUMAN", future:"SAFETY_EMERGENCY_COORD", futureSystem:null, weight:6, rationale:"A CO response requires a human to assess symptom severity in real time, advise evacuation, coordinate with emergency services, and dispatch field crews simultaneously. The regulatory framework governing these calls requires a qualified human representative at all decision points — no exception." },
+  { id:"g15", name:"Emergency field crew dispatch (OMS/GIS-assisted)", roles:["Tier 1 — Emergency & Safety CSR","Tier 2 — Safety Order Coordinator"], arch:"AUGMENTED", future:"SAFETY_EMERGENCY_COORD", futureSystem:"SYS_OUTAGE_AGENT", weight:7, rationale:"The Outage & Restoration Agent surfaces nearest available crew, estimated travel time, and site history in real time via OMS and GIS integration. The Safety & Emergency Response Coordinator dispatches the crew, maintains situational awareness, and stays on the incident until field arrival confirmation. AI provides the intelligence; the human owns the dispatch decision." },
+  { id:"g16", name:"Post-emergency safety order tracking & field closure", roles:["Tier 2 — Safety Order Coordinator","Contact Centre Director"], arch:"AUGMENTED", future:"SAFETY_EMERGENCY_COORD", futureSystem:"SYS_OUTAGE_AGENT", weight:5, rationale:"The Outage Agent tracks open safety orders, pushes automated status updates to customers, and flags overdue field closures. The Safety & Emergency Response Coordinator reviews flagged orders, escalates to field management, and ensures regulatory close-out documentation is completed before the order is signed off." },
+
+  // CLUSTER 4 — OUTAGE & RESTORATION
+  { id:"g17", name:"Gas outage status inquiry & restoration ETA", roles:["Tier 1 — Outage & Restoration CSR"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_OUTAGE_AGENT", weight:8, rationale:"With real-time OMS integration, the Outage & Restoration Agent confirms whether there is an active outage at a customer's address, provides restoration ETAs, and sends proactive status updates — in under 10 seconds, across any channel, 24/7. One of the clearest containment wins in a gas utility contact centre." },
+  { id:"g18", name:"Pilot relight appointment scheduling", roles:["Tier 1 — Outage & Restoration CSR"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_OUTAGE_AGENT", weight:8, rationale:"Pilot relight is the most common 'no gas' contact type. The Outage Agent authenticates the customer, confirms the outage type (systemic vs. appliance), books the first available technician appointment, and sends confirmation — end-to-end, no human required for standard residential cases." },
+  { id:"g19", name:"Gas restoration post-payment confirmation", roles:["Tier 1 — Outage & Restoration CSR","Tier 2 — Collections & Credit Specialist"], arch:"AUGMENTED", future:"CUSTOMER_OUTCOME_MGR", futureSystem:"SYS_OUTAGE_AGENT", weight:5, rationale:"The Outage Agent confirms payment receipt via CIS, validates account status, and initiates the restoration service order. The Customer Outcome Manager handles cases where vulnerable customer flags are present, payment is disputed, or a Medical Baseline protection must be validated before restoration." },
+  { id:"g20", name:"Gas pressure issue diagnosis & appliance safety dispatch", roles:["Tier 1 — Outage & Restoration CSR","Tier 2 — Safety Order Coordinator"], arch:"AGENTIC", future:"SAFETY_EMERGENCY_COORD", futureSystem:"SYS_OUTAGE_AGENT", weight:5, rationale:"The Outage Agent cross-references pressure readings, service history, and appliance type to differentiate between a systemic pressure anomaly (requires field crew) and an appliance fault (requires licensed contractor). The Safety & Emergency Response Coordinator reviews any case where pressure is anomalous across multiple addresses — a potential network issue." },
+
+  // CLUSTER 5 — ASSISTANCE PROGRAMS & AFFORDABILITY
+  { id:"g21", name:"CARE / FERA eligibility screening & enrolment", roles:["Tier 2 — Assistance Programs Specialist"], arch:"AUGMENTED", future:"ENERGY_ADVISOR", futureSystem:"SYS_ASSISTANCE_NAVIGATOR", weight:7, rationale:"The Assistance Program Navigator screens household size and income against CARE/FERA thresholds, pre-fills the application, and guides enrolment. The Energy Advisor handles edge cases — self-employment income, seasonal earnings, complex household composition — where standard eligibility criteria don't clearly resolve." },
+  { id:"g22", name:"Medical Baseline & Life Support programme setup", roles:["Tier 2 — Assistance Programs Specialist"], arch:"HUMAN", future:"ENERGY_ADVISOR", futureSystem:null, weight:5, rationale:"Medical Baseline designation requires reviewing medical documentation, confirming qualifying conditions, and setting the account flag that protects against standard disconnection protocols. The regulatory designation carries liability; a qualified human must validate documentation and own the enrolment decision." },
+  { id:"g23", name:"Budget Billing enrollment & annual true-up", roles:["Tier 1 — Billing & Account CSR","Tier 2 — Assistance Programs Specialist"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_SERVICE_ENGINE", weight:5, rationale:"Budget Billing calculation — 12-month usage average plus projected therm price — and annual true-up processing are deterministic. The Service Transactions Engine handles enrolment and true-up communication with no human intervention required." },
+  { id:"g24", name:"HEAP & weatherization referral & programme coordination", roles:["Tier 2 — Assistance Programs Specialist"], arch:"AUGMENTED", future:"ENERGY_ADVISOR", futureSystem:"SYS_ASSISTANCE_NAVIGATOR", weight:4, rationale:"The Assistance Navigator identifies HEAP eligibility and pre-screens for weatherization programme fit. The Energy Advisor coordinates the warm handoff to the relevant community agency and manages follow-through — a relationship-intensive step requiring judgment about fit, timing, and customer readiness." },
+
+  // CLUSTER 6 — ACCOUNT MANAGEMENT & METERS
+  { id:"g25", name:"Account information & contact details update", roles:["Tier 1 — Billing & Account CSR","Tier 1 — Digital Channel CSR"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_SERVICE_ENGINE", weight:7, rationale:"Address updates, phone changes, email preferences, and paperless billing enrolment are structured CIS updates with no judgment required. The Service Transactions Engine handles authentication and write-back end-to-end across all channels." },
+  { id:"g26", name:"Meter test request & complex investigation referral", roles:["Tier 2 — High Bill & Meter Specialist"], arch:"AGENTIC", future:"ENERGY_ADVISOR", futureSystem:"SYS_HIGH_BILL_AGENT", weight:5, rationale:"The High Bill Analysis Agent reviews prior meter read history, compares consumption patterns, and determines whether a field meter test meets SG&E's testing policy criteria. If warranted, it schedules the test. The Energy Advisor reviews borderline cases and owns the customer communication on results and any resulting billing adjustment." },
+  { id:"g27", name:"Commercial account rate code changes & complex billing", roles:["Tier 2 — Commercial & Construction Specialist"], arch:"AUGMENTED", future:"COMMERCIAL_CONSTRUCTION_SPEC", futureSystem:"SYS_SERVICE_ENGINE", weight:5, rationale:"AI retrieves the account's tariff schedule, usage history, and available commercial rate options and drafts a rate comparison. The Commercial & Construction Specialist reviews the analysis, applies judgment on load profile and business use case, and owns the rate code recommendation." },
+  { id:"g28", name:"Line extension permit & contractor coordination", roles:["Tier 2 — Commercial & Construction Specialist"], arch:"HUMAN", future:"COMMERCIAL_CONSTRUCTION_SPEC", futureSystem:null, weight:4, rationale:"New gas line extensions involve infrastructure design, permit applications, and multi-party coordination across SG&E engineering, field operations, and external contractors. The complexity and regulatory liability of this work requires the Commercial & Construction Specialist's cross-functional expertise and direct accountability." },
+
+  // CLUSTER 7 — QUALITY, COMPLAINTS & OPERATIONS
+  { id:"g29", name:"Formal complaint investigation & CPUC escalation management", roles:["Tier 2 — Escalations & Complaints Specialist","Team Leader / Supervisor"], arch:"AUGMENTED", future:"CUSTOMER_OUTCOME_MGR", futureSystem:"SYS_QUALITY_COMPLIANCE", weight:5, rationale:"The Quality & Compliance Intelligence system assembles the full interaction history, identifies service failure points, and drafts a response. The Customer Outcome Manager reviews the finding, decides on remedy, and signs off — CPUC-reportable complaints require accountable human sign-off before any resolution is communicated." },
+  { id:"g30", name:"Interaction quality scoring & CPUC script compliance monitoring", roles:["QA & Compliance Analyst"], arch:"AGENTIC", future:"QUALITY_COMPLIANCE_COACH", futureSystem:"SYS_QUALITY_COMPLIANCE", weight:6, rationale:"The Quality & Compliance Intelligence system scores 100% of interactions against CPUC-mandated emergency call scripts (DOT Part 192), payment arrangement protocols, and internal quality rubrics. The Quality & Compliance Coach reviews flagged interactions, calibrates scoring criteria, and owns regulatory reporting sign-off." },
+  { id:"g31", name:"Agent coaching & performance development", roles:["Team Leader / Supervisor","QA & Compliance Analyst"], arch:"AUGMENTED", future:"QUALITY_COMPLIANCE_COACH", futureSystem:"SYS_QUALITY_COMPLIANCE", weight:5, rationale:"AI surfaces coaching opportunities from 100% interaction scoring. The Quality & Compliance Coach delivers targeted development sessions on the edge cases and compliance gaps flagged with highest confidence — shifting coaching from supervisor intuition to evidence-based, pattern-driven development." },
+  { id:"g32", name:"WFM forecasting, scheduling & intraday adherence", roles:["Workforce Management Analyst","Contact Centre Director"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_OPS_INTELLIGENCE", weight:6, rationale:"Contact pattern forecasting, schedule optimisation, and intraday rebalancing are deterministic at their core once demand patterns are established. The Operations Intelligence Suite runs continuously. The AI Ops Orchestrator sets policy thresholds and approves outputs for exception scenarios." },
+  { id:"g33", name:"KPI reporting, call driver analytics & performance insights", roles:["MI & Reporting Analyst","Contact Centre Director"], arch:"DETERMINISTIC", future:"AI_OPS_ORCHESTRATOR", futureSystem:"SYS_OPS_INTELLIGENCE", weight:5, rationale:"Dashboard production and call driver reporting are deterministic once data pipelines are defined. The Operations Intelligence Suite delivers always-on. The AI Ops Orchestrator interprets performance signals and recommends operational adjustments to leadership." },
+  { id:"g34", name:"Knowledge base & SOP governance for AI and human agents", roles:["Knowledge & Training Specialist","Team Leader / Supervisor"], arch:"AUGMENTED", future:"QUALITY_COMPLIANCE_COACH", futureSystem:"SYS_QUALITY_COMPLIANCE", weight:4, rationale:"AI identifies knowledge gaps from QA scoring patterns and drafts SOP updates. The Quality & Compliance Coach reviews and approves — the quality of the knowledge base directly determines AI agent performance, making this role operational infrastructure rather than documentation overhead." }
+];
+
+// ============================================================
+// INTERIM STATE DATA  (2026 – 2028)
+// Based on SG&E's near-term vision: "simple, personalized, seamless"
+// Transcript source: Element Energy / SG&E agentic AI vision video
+// ============================================================
+
+const INTERIM_FUTURE_ROLES = {
+  SAFETY_EMERGENCY_COORD: {
+    key: "SAFETY_EMERGENCY_COORD",
+    title: "Safety & Emergency Response Coordinator",
+    interim: true,
+    theRole: "Leads all gas emergency and CO calls, safety order dispatch, and post-incident closure — this role is needed from Day 1 and changes very little in the interim",
+    theShift: "This is the most future-proof role in the portfolio. Regulatory obligation (CPUC, DOT Part 192) means it is implemented immediately, in full, from the first day of any AI deployment. The near-term version is essentially identical to the full future state.\n\nThe only interim difference: the coordinator provides temporary escalation coverage for outage contacts (status, pilot relight) while the Outage & Restoration Agent builds containment confidence. By 2027–2028, the AI reaches steady-state containment and the coordinator's scope narrows purely to safety and emergency work.",
+    compromises: [
+      "Coordinator temporarily absorbs escalation backstop for outage contacts while AI containment is being proven (2026–2027 ramp period)",
+      "OMS/GIS real-time dispatch integration is mid-build in 2026 — coordinator initially uses manual GIS tools supplemented by AI script guidance",
+      "Post-emergency safety order tracking AI is Phase 2; coordinator manually tracks open orders through an existing CRM workflow in the interim"
+    ]
+  },
+  CUSTOMER_OUTCOME_MGR: {
+    key: "CUSTOMER_OUTCOME_MGR",
+    title: "Complex Case Specialist",
+    interim: true,
+    theRole: "Handles escalated billing complaints, payment hardship cases, and formal CPUC escalations — supported by AI-assist copilot but operating within existing Tier 2 queue structures",
+    theShift: "The full future Customer Outcome Manager is a consolidated role with unified authority across all high-stakes contacts. In 2026–2028, this looks more like an evolved Tier 2 Escalations & Complaints Specialist with AI-assist capability. Tier 2 queues remain structured separately — Collections, Escalations, and High Bill are distinct specializations.\n\nThe Agent Assist copilot (integrated into existing CRM) provides interaction history, policy lookup, and draft responses in real time. Agents handle fewer cases per day but resolve them more completely. The consolidated 'Customer Outcome Manager' identity — with unified authority across all high-stakes contacts — is a 2027–2028 org design change requiring significant upskilling and role redesign.",
+    compromises: [
+      "Tier 2 queues remain separate: Collections, Escalations, and High Bill are distinct specializations — full role consolidation is a 2027–2028 org design decision",
+      "Payment & Collections Agent does not yet own end-to-end hardship assessment; the specialist still leads most payment exception conversations manually with AI-generated summaries",
+      "CPUC formal complaint responses are drafted by AI but require full human review and sign-off on every case — no partial AI-ownership in the interim",
+      "Upskilling to the full 'Customer Outcome Manager' authority standard — unified accountability across financial, complaints, and vulnerability — is a structured 2027 programme, not a Day 1 capability"
+    ]
+  },
+  ENERGY_ADVISOR: {
+    key: "ENERGY_ADVISOR",
+    title: "Assisted Billing & Programs Specialist",
+    interim: true,
+    theRole: "Handles high bill investigations and assistance programme enrolment using AI-generated case summaries — the human leads the analysis conversation; the AI prepares the evidence",
+    theShift: "The full future Energy Advisor is defined by the AI owning the investigation and the human owning the outcome conversation. In 2026–2028, the model is inverted: the human specialist leads the investigation, using the High Bill Analysis Agent's output as a structured starting point to review and validate before presenting to the customer.\n\nThis 'copilot mode' is deliberate — it builds the model confidence, calibration data, and regulatory acceptance needed to shift to full AI ownership by 2028. The broader 'Energy Advisor' identity, which the transcript envisions as crafting personalised energy packages including EV, solar, and battery storage, requires the 2030 capability set of AI-to-AI agent interactions. The interim role is scoped to billing and affordability only.",
+    compromises: [
+      "High Bill Analysis Agent deployed in 'copilot mode': AI presents findings, human validates before communicating to customer — not yet end-to-end AI containment for standard cases",
+      "HDD weather normalisation and peer-neighbour usage comparison are Phase 2 features of the High Bill Agent; V1 relies on 13-month usage trend analysis and rate code audit only",
+      "CARE/FERA enrollment AI guidance covers standard income threshold cases only; complex income verification (self-employment, seasonal earnings, multi-earner households) remains fully human-led",
+      "The 'Energy Advisor' identity envisioned in the SG&E transcript — crafting personalised packages combining EV chargers, battery storage, and demand response — requires AI-to-AI agent capabilities that are beyond near-term scope",
+      "Medical Baseline and Life Support setup remains 100% human (unchanged across both interim and full future)"
+    ]
+  },
+  COMMERCIAL_CONSTRUCTION_SPEC: {
+    key: "COMMERCIAL_CONSTRUCTION_SPEC",
+    title: "Commercial & Construction Specialist",
+    interim: true,
+    theRole: "Manages commercial accounts, rate code changes, and new construction coordination — near-identical to the full future role, with minor scope differences in the interim",
+    theShift: "This is the most future-proof front-line role. Its work is irreducibly specialist in both the interim and the full future state, so the near-term deployment looks very similar to the end-state design.\n\nThe primary interim difference: structured commercial billing queries (rate code lookups, basic account maintenance) that the Service Transactions Engine will eventually absorb are still handled by the specialist in the near term, as commercial account capabilities in the engine are Phase 2.",
+    compromises: [
+      "Commercial account rate code analysis remains largely human-led in 2026 — AI-assisted rate comparison via the Service Transactions Engine is a Phase 2 commercial data model capability",
+      "New construction line extension workflow automation (engineering, permitting, contractor coordination) has no digital integration in the near term — specialist works manually across systems",
+      "Commercial self-service portal capabilities are limited in 2026; specialist handles more administrative updates that digital channels would eventually absorb"
+    ]
+  },
+  AI_OPS_ORCHESTRATOR: {
+    key: "AI_OPS_ORCHESTRATOR",
+    title: "AI & Digital Channel Manager",
+    interim: true,
+    theRole: "Owns performance and quality for SG&E's first deployed AI systems and the digital self-service channel — a product-owner role that expands progressively as the AI estate matures",
+    theShift: "The full future AI Operations Orchestrator governs a mature, seven-system AI estate with sophisticated exception logic, vendor governance frameworks, and continuous improvement infrastructure. In 2026–2028, this role manages 2–3 deployed systems (Service Transactions Engine, Outage Agent, Payment Agent).\n\nThe person in this role sets containment targets, reviews exception rates daily, triages AI failures, works with technical teams on prompt and flow improvements, and reports on digital channel metrics to the Director. This is a genuinely new role — and it exists from Day 1 of deployment — but its accountability scope is closer to 'product manager' than 'infrastructure architect'. It expands as each new AI system goes live.",
+    compromises: [
+      "Manages 2–3 AI systems in 2026 rather than the full 7-system estate — each new system adds to scope over 18–24 months",
+      "WFM forecasting and Operations Intelligence are not in scope in the interim — WFM Analyst role continues in parallel through at least 2027",
+      "MI & Reporting Analyst continues producing manual dashboards while data pipelines are built — the AI & Digital Channel Manager governs channel metrics only, not the full operational analytics estate",
+      "AI exception handling is partly manual: the manager triages failures and reroutes to human queues rather than AI self-correcting or threshold-rebalancing automatically",
+      "The full 'Orchestrator' accountability — model governance, vendor SLA management, escalation threshold architecture — is a 2028 maturity level requiring platform stability and organisational trust"
+    ]
+  },
+  QUALITY_COMPLIANCE_COACH: {
+    key: "QUALITY_COMPLIANCE_COACH",
+    title: "Senior QA & Compliance Lead",
+    interim: true,
+    theRole: "Leads a hybrid QA programme — AI scoring supplements (but does not yet replace) manual QA sampling — with primary focus on calibrating CPUC compliance detection",
+    theShift: "In the full future, the Quality & Compliance Intelligence system scores 100% of interactions and the coach's job is calibration, regulatory interpretation, and targeted coaching. In 2026–2028, AI covers 50–70% of interactions with structured scoring, while a small QA team (2–3 analysts) continues manual review for high-risk and regulatory-sensitive contact categories.\n\nThe primary near-term priority is validating the AI's CPUC emergency call script scoring against human benchmarks before it can be used in formal regulatory filings. This requires 18–24 months of parallel human-AI scoring. The coaching function becomes evidence-based faster than the compliance reporting function.",
+    compromises: [
+      "AI interaction scoring covers 50–70% of contacts in 2026, not 100% — model requires calibration against manual QA benchmarks before full coverage is trusted",
+      "CPUC emergency call script compliance AI scores require 18–24 months of parallel human validation before they can be used in formal regulatory reporting — manual emergency call audits continue throughout this period",
+      "2–3 QA analysts continue reporting to the Senior QA Lead in the interim; full team reduction to 'coach only' happens as AI scoring coverage and confidence matures",
+      "Performance coaching authority remains partially distributed to Team Leaders across Tier 1 and Tier 2 queues — the Senior QA Lead's unified coaching mandate expands progressively as AI scoring builds cross-queue credibility",
+      "Knowledge base SOP governance is a near-term responsibility but the formal 'infrastructure role' framing — where every SOP change flows through QA — is not yet established; it's reactive rather than structural in 2026"
+    ]
+  }
+};
+
+const INTERIM_AI_SYSTEMS = {
+  SYS_HIGH_BILL_AGENT: {
+    key: "SYS_HIGH_BILL_AGENT",
+    title: "High Bill Analysis Agent — Copilot Mode",
+    archetype: "AUGMENTED",
+    theRole: "Generates structured high bill case summaries for agent review — assembles usage history, rate audit, and likely-cause hypothesis — but does not yet resolve cases end-to-end",
+    theShift: "In 2026–2028, the High Bill Analysis Agent operates in 'copilot mode': it retrieves 13-month usage history, audits the rate code, identifies estimated read periods, and presents a likely-cause hypothesis (weather, rate change, appliance, estimation) as a structured case summary. The Assisted Billing & Programs Specialist validates the finding before communicating with the customer. End-to-end containment — where AI resolves standard high bill cases autonomously — is the 2028 target.",
+    nearTermScope: [
+      "13-month usage trend retrieval and structured visualisation",
+      "Basic rate code audit and estimated bill period identification",
+      "Likely-cause hypothesis (up to 3 ranked factors) for agent review",
+      "Meter test eligibility pre-assessment based on usage anomaly patterns"
+    ],
+    mustWait: [
+      "HDD weather normalisation and peer-neighbour usage comparison (Phase 2 — requires weather API integration and anonymised neighbourhood data)",
+      "End-to-end autonomous resolution of standard high bill cases without agent validation",
+      "Automated billing credit initiation without agent authorisation"
+    ]
+  },
+  SYS_PAYMENT_AGENT: {
+    key: "SYS_PAYMENT_AGENT",
+    title: "Payment & Collections Agent — Standard Cases Only",
+    archetype: "AGENTIC",
+    theRole: "Handles payment processing, AutoPay enrollment, and first-time standard payment arrangements within strict policy thresholds — exceptions route immediately to the Complex Case Specialist",
+    theShift: "Near-term scope is deliberately conservative. The Payment Agent handles the most clearly bounded cases: payment transactions, AutoPay setup, and first-time arrangements where the customer has no prior defaults and the balance is within the standard threshold. Any exception — hardship signal, vulnerability flag, prior default, balance over threshold — immediately routes to a human. This builds operational trust and generates the edge-case training data needed to expand scope in Phase 2.",
+    nearTermScope: [
+      "One-time payment processing and AutoPay enrollment (all channels)",
+      "First-time standard payment arrangement setup within policy thresholds (no prior defaults)",
+      "Residential deposit calculation for standard credit profile moves",
+      "Disconnection notice status check and basic reconnection eligibility confirmation"
+    ],
+    mustWait: [
+      "Hardship negotiation and broken arrangement recovery (human-led through 2027 — requires trust, judgment, and vulnerability sensitivity)",
+      "Proactive outbound collections outreach at scale",
+      "Complex deposit waiver discretion beyond standard credit policy rules",
+      "Commercial account payment arrangements (Phase 2 — different policy framework)"
+    ]
+  },
+  SYS_SERVICE_ENGINE: {
+    key: "SYS_SERVICE_ENGINE",
+    title: "Service Transactions Engine",
+    archetype: "DETERMINISTIC",
+    theRole: "Processes new residential starts, stops, transfers, and account updates — the highest-confidence near-term deployment with a 6–12 month target to production",
+    theShift: "The Service Transactions Engine is the highest-readiness system in the portfolio and the most direct expression of the SG&E transcript vision — 'simple, personalized, seamless' — for the highest-volume contact type. New residential service start (SG&E's largest contact driver), move-outs, and transfers can be containerised in the first deployment wave. There is minimal gap between the near-term and full future scope for this system.",
+    nearTermScope: [
+      "New residential service start (IVR, digital, chat — 24/7)",
+      "Service stop and move-out processing",
+      "Service transfer between addresses",
+      "Account information updates (contact details, address, paperless billing)",
+      "Budget Billing enrollment"
+    ],
+    mustWait: [
+      "Commercial new-service initiation (Phase 2 — requires commercial account data model and rate code logic)",
+      "Line extension and construction service orders (requires field workflow integration)",
+      "Fully automated deposit waiver decisioning beyond standard residential policy"
+    ]
+  },
+  SYS_OUTAGE_AGENT: {
+    key: "SYS_OUTAGE_AGENT",
+    title: "Outage & Restoration Agent — High-Volume Use Cases",
+    archetype: "DETERMINISTIC",
+    theRole: "Handles outage status inquiries and pilot relight scheduling — the two highest-volume 'no gas' contacts — with OMS integration from Day 1; complex safety and restoration cases are Phase 2",
+    theShift: "In 2026–2028, the Outage Agent is scoped to the contacts it can own cleanly from Day 1: outage status confirmation and pilot relight scheduling. These are the largest-volume, most clearly bounded cases in the outage queue. More complex capabilities — pressure diagnosis, safety order tracking, proactive outbound outage notifications — are Phase 2 once OMS integration is proven stable and the safety-related agentic reasoning is validated.",
+    nearTermScope: [
+      "Gas outage status confirmation and restoration ETA delivery (OMS integration)",
+      "Pilot relight appointment scheduling for standard residential cases",
+      "Basic restoration service order initiation post-payment (with partial human review)"
+    ],
+    mustWait: [
+      "Gas pressure issue diagnosis and appliance safety dispatch (requires agentic reasoning and safety validation — Phase 2)",
+      "Post-emergency safety order tracking and field closure coordination (Phase 2)",
+      "Proactive outbound outage notifications (requires OMS push integration — Phase 2)",
+      "Fully autonomous gas restoration post-payment (partial human review in near term for vulnerability flags)"
+    ]
+  },
+  SYS_ASSISTANCE_NAVIGATOR: {
+    key: "SYS_ASSISTANCE_NAVIGATOR",
+    title: "Assistance Program Navigator — Standard Eligibility Only",
+    archetype: "AUGMENTED",
+    theRole: "Screens customers for CARE and FERA eligibility and guides standard enrolment — complex income cases and multi-programme stacking remain with the Assisted Programs Specialist",
+    theShift: "The near-term Assistance Navigator handles the most clearly bounded eligibility cases: household size and income within standard thresholds, straightforward single-programme applications. It pre-fills the application and guides the customer through enrolment. Complex cases — self-employment income, multiple programme combinations, HEAP warm handoffs — remain human-led in 2026–2028.",
+    nearTermScope: [
+      "CARE/FERA eligibility screening (standard household income thresholds)",
+      "Standard application pre-fill and guided enrolment flow",
+      "Basic HEAP referral to community agency (name, number, eligibility flag)"
+    ],
+    mustWait: [
+      "Multi-programme stacking analysis (CARE + HEAP + weatherization in one session) — Phase 2",
+      "Complex income verification cases (self-employment, seasonal earnings, multi-earner households)",
+      "Warm handoff coordination with external HEAP agencies (requires agency API integration)",
+      "Medical Baseline setup — permanently human-led by regulation"
+    ]
+  },
+  SYS_QUALITY_COMPLIANCE: {
+    key: "SYS_QUALITY_COMPLIANCE",
+    title: "Quality Monitoring Copilot — Partial Coverage",
+    archetype: "AUGMENTED",
+    theRole: "Scores 50–70% of interactions against a quality rubric, flags likely CPUC script deviations for human review, and generates coaching prompts — AI supplements rather than replaces QA analysts in 2026",
+    theShift: "In the full future, the Quality & Compliance Intelligence system scores 100% of interactions and the coach's role is pure calibration and regulatory sign-off. In 2026–2028, AI covers the majority of interactions with structured scoring, while a QA team validates AI flags and continues sampling high-risk categories. The near-term value is coaching-at-scale from AI-generated prompts — not yet CPUC compliance reporting.",
+    nearTermScope: [
+      "Automated interaction scoring for 50–70% of contacts against internal quality rubric",
+      "CPUC emergency call script deviation flagging (human-reviewed — not yet compliance-reportable)",
+      "Coaching prompt generation based on quality scoring patterns",
+      "Interaction summary and call classification for QA team prioritisation"
+    ],
+    mustWait: [
+      "100% interaction coverage — requires model calibration, compute scaling, and QA team acceptance (18–24 months)",
+      "CPUC-accepted AI compliance reporting — requires regulatory validation and 18–24 months of parallel human benchmarking",
+      "Full replacement of QA analyst team — Senior QA Lead manages 2–3 analysts throughout the interim period",
+      "Knowledge base gap detection and automated SOP draft generation (Phase 2)"
+    ]
+  },
+  SYS_OPS_INTELLIGENCE: {
+    key: "SYS_OPS_INTELLIGENCE",
+    title: "Operations Dashboard Suite — Automated Pipelines",
+    archetype: "DETERMINISTIC",
+    theRole: "Automates KPI dashboard production and delivers WFM tool-based scheduling — replacing manual report assembly with structured data pipelines; true AI forecasting is Phase 2",
+    theShift: "The near-term Operations Dashboard Suite is primarily about eliminating manual data assembly. Automated KPI dashboards and WFM tool scheduling replace the weekly MI production cycle and the manual scheduling spreadsheet. True AI forecasting — demand prediction informed by AI-impacted contact patterns, real-time intraday rebalancing — requires 18+ months of AI-era contact data before it can be trained reliably.",
+    nearTermScope: [
+      "Automated KPI dashboards (no manual MI production — reports refresh automatically)",
+      "WFM tool-based schedule optimisation and intraday adherence alerts",
+      "Automated call driver tagging and contact volume categorisation"
+    ],
+    mustWait: [
+      "AI-driven demand forecasting (requires 18+ months of AI-impacted contact data to calibrate a reliable model)",
+      "Real-time intraday rebalancing with AI recommendations (Phase 2 — requires stable AI contact data)",
+      "Advanced call driver root cause analytics linking AI containment rates to queue volume shifts (Phase 2)"
+    ]
+  }
+};
+
+// ============================================================
+// GLOBAL VIEW STATE  (affects Sankey labels + Ledger future column)
+// ============================================================
+let globalViewState = "FUTURE";
+
+function setGlobalState(state) {
+  globalViewState = state;
+  document.getElementById("global-btn-future").className  = "state-btn" + (state === "FUTURE"  ? " active-future"  : "");
+  document.getElementById("global-btn-interim").className = "state-btn" + (state === "INTERIM" ? " active-interim" : "");
+  if (document.getElementById("body-flow").classList.contains("open"))   renderSankey();
+  if (document.getElementById("body-ledger").classList.contains("open")) renderLedger();
+}
+
+function resolveTitle(key, type) {
+  if (type === "human") {
+    return globalViewState === "INTERIM"
+      ? (INTERIM_FUTURE_ROLES[key]?.title || FUTURE_ROLES[key]?.title || key)
+      : (FUTURE_ROLES[key]?.title || key);
+  } else {
+    return globalViewState === "INTERIM"
+      ? (INTERIM_AI_SYSTEMS[key]?.title || AI_SYSTEMS[key]?.title || key)
+      : (AI_SYSTEMS[key]?.title || key);
+  }
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function getFutureFlows(act) {
+  const flows = [];
+  if (act.arch === "DETERMINISTIC") {
+    if (act.futureSystem) flows.push({ key: act.futureSystem, weight: act.weight, type: "ai" });
+    else flows.push({ key: act.future, weight: act.weight, type: "human" });
+  } else if (act.arch === "HUMAN") {
+    flows.push({ key: act.future, weight: act.weight, type: "human" });
+  } else {
+    if (act.futureSystem) {
+      flows.push({ key: act.futureSystem, weight: act.weight * 0.7, type: "ai" });
+      flows.push({ key: act.future, weight: act.weight * 0.3, type: "human" });
+    } else {
+      flows.push({ key: act.future, weight: act.weight, type: "human" });
+    }
+  }
+  return flows;
+}
+
+function archBadgeClass(arch) {
+  return { DETERMINISTIC:"det", AGENTIC:"age", AUGMENTED:"aug", HUMAN:"hum" }[arch] || "hum";
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// ============================================================
+// SECTION TOGGLE
+// ============================================================
+document.querySelectorAll(".section-toggle").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const section = btn.dataset.section;
+    const body = document.getElementById("body-" + section);
+    const lbl = btn.querySelector(".expand-lbl");
+    const isOpen = body.classList.toggle("open");
+    lbl.textContent = isOpen ? "Collapse" : "Expand";
+    if (isOpen && section === "flow") renderSankey();
+    if (isOpen && section === "overview") renderOverview();
+    if (isOpen && section === "roles") renderRoleCards();
+    if (isOpen && section === "systems") renderSystemCards();
+    if (isOpen && section === "ledger") renderLedger();
+  });
+});
+
+document.getElementById("expand-all").addEventListener("click", () => {
+  document.querySelectorAll(".section-body").forEach(body => {
+    body.classList.add("open");
+    const btn = body.previousElementSibling;
+    if (btn) btn.querySelector(".expand-lbl").textContent = "Collapse";
+  });
+  renderOverview(); renderSankey(); renderRoleCards(); renderSystemCards(); renderLedger();
+});
+
+document.getElementById("collapse-all").addEventListener("click", () => {
+  document.querySelectorAll(".section-body").forEach(body => {
+    body.classList.remove("open");
+    const btn = body.previousElementSibling;
+    if (btn) btn.querySelector(".expand-lbl").textContent = "Expand";
+  });
+});
+
+// ============================================================
+// SECTION 02: OVERVIEW
+// ============================================================
+function renderOverview() {
+  const totalWeight = ACTIVITIES.reduce((s,a) => s+a.weight, 0);
+  const byArch = {};
+  ACTIVITIES.forEach(a => { byArch[a.arch] = (byArch[a.arch]||0) + a.weight; });
+  const humanWeight = byArch["HUMAN"] || 0;
+  const autoWeight = (byArch["DETERMINISTIC"]||0) + (byArch["AGENTIC"]||0);
+  const augWeight = byArch["AUGMENTED"] || 0;
+
+  const stats = [
+    { value: CURRENT_ROLES.length, label: "Current Roles", sub: "being redesigned" },
+    { value: ACTIVITIES.length, label: "Activities Mapped", sub: "across all roles" },
+    { value: Object.keys(FUTURE_ROLES).length, label: "Future Human Roles", sub: "redefined, not renamed" },
+    { value: Object.keys(AI_SYSTEMS).length, label: "AI Systems Created", sub: "purpose-built agents" },
+    { value: Math.round(autoWeight/totalWeight*100)+"%", label: "Automatable Share", sub: "DET + Agentic effort" },
+    { value: Math.round(humanWeight/totalWeight*100)+"%", label: "Human-led Share", sub: "judgment & empathy" }
+  ];
+
+  const statsRow = document.getElementById("stats-row");
+  statsRow.innerHTML = stats.map(s =>
+    `<div class="stat-card">
+      <div class="stat-value serif">${s.value}</div>
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-sub">${s.sub}</div>
+    </div>`
+  ).join("");
+
+  const bar = document.getElementById("arch-bar");
+  bar.innerHTML = Object.entries(byArch).map(([arch, w]) =>
+    `<div class="arch-bar-seg" style="width:${w/totalWeight*100}%;background:${ARCHETYPES[arch].color};opacity:.8" title="${ARCHETYPES[arch].label}: ${Math.round(w/totalWeight*100)}%"></div>`
+  ).join("");
+
+  const legend = document.getElementById("arch-bar-legend");
+  legend.innerHTML = Object.entries(byArch).map(([arch, w]) =>
+    `<div class="arch-bar-legend-item">
+      <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${ARCHETYPES[arch].color};flex-shrink:0"></span>
+      ${ARCHETYPES[arch].label} — ${Math.round(w/totalWeight*100)}% of effort
+    </div>`
+  ).join("");
+}
+
+// ============================================================
+// SECTION 03: SANKEY
+// ============================================================
+let activeArchetypes = new Set(["DETERMINISTIC","AGENTIC","AUGMENTED","HUMAN"]);
+let activeRoles = new Set(CURRENT_ROLES);
+
+// Build archetype pills
+const archPills = document.getElementById("arch-pills");
+Object.keys(ARCHETYPES).forEach(arch => {
+  const btn = document.createElement("button");
+  btn.className = "pill active";
+  btn.dataset.arch = arch;
+  btn.textContent = ARCHETYPES[arch].label;
+  btn.addEventListener("click", () => {
+    if (activeArchetypes.has(arch)) activeArchetypes.delete(arch);
+    else activeArchetypes.add(arch);
+    btn.classList.toggle("active", activeArchetypes.has(arch));
+    renderSankey();
+  });
+  archPills.appendChild(btn);
+});
+
+// Build role pills
+const rolePills = document.getElementById("role-pills");
+CURRENT_ROLES.forEach(role => {
+  const btn = document.createElement("button");
+  btn.className = "pill active";
+  btn.textContent = role.length > 22 ? role.slice(0,20)+"…" : role;
+  btn.title = role;
+  btn.addEventListener("click", () => {
+    if (activeRoles.has(role)) activeRoles.delete(role);
+    else activeRoles.add(role);
+    btn.classList.toggle("active", activeRoles.has(role));
+    renderSankey();
+  });
+  rolePills.appendChild(btn);
+});
+
+function renderSankey() {
+  const svg = document.getElementById("sankey-svg");
+
+  // Filter activities
+  const filteredActs = ACTIVITIES.filter(a =>
+    activeArchetypes.has(a.arch) && a.roles.some(r => activeRoles.has(r))
+  );
+  if (filteredActs.length === 0) {
+    svg.innerHTML = `<text x="350" y="60" fill="#8b8fa4" font-family="monospace" font-size="12" text-anchor="middle">No activities match current filters.</text>`;
+    svg.setAttribute("viewBox", "0 0 700 80");
+    svg.setAttribute("height", "80");
+    return;
+  }
+
+  const SCALE = 4.0;
+  const AGAP = 4;  // gap between activity nodes
+  const NGAP = 5;  // gap between role/future nodes
+  const PAD_TOP = 30;
+  const COL_W = 155;
+
+  // Column x positions
+  const CA_L = 5, CA_R = CA_L + COL_W;
+  const CB_L = CA_R + 90, CB_R = CB_L + 140;
+  const CC_L = CB_R + 90, CC_R = CC_L + COL_W;
+  const SVG_W = CC_R + 5;
+
+  // === Activity nodes (Column B) ===
+  const actNodes = {};
+  let ay = PAD_TOP;
+  filteredActs.forEach(act => {
+    const h = Math.max(18, act.weight * SCALE);
+    actNodes[act.id] = { y: ay, h, consumed_left: 0, consumed_right: 0 };
+    ay += h + AGAP;
+  });
+
+  // === Role nodes (Column A) ===
+  const roleFlows = {};
+  filteredActs.forEach(act => {
+    const validRoles = act.roles.filter(r => activeRoles.has(r));
+    if (!validRoles.length) return;
+    const perRole = act.weight / validRoles.length;
+    validRoles.forEach(r => { roleFlows[r] = (roleFlows[r]||0) + perRole; });
+  });
+  const roleNodes = {};
+  let ry = PAD_TOP;
+  CURRENT_ROLES.filter(r => roleFlows[r] > 0).forEach(r => {
+    const h = Math.max(18, roleFlows[r] * SCALE);
+    roleNodes[r] = { y: ry, h, consumed: 0 };
+    ry += h + NGAP;
+  });
+
+  // === Future state nodes (Column C) ===
+  const futureFlows = {};
+  filteredActs.forEach(act => {
+    getFutureFlows(act).forEach(({ key, weight, type }) => {
+      if (!futureFlows[key]) futureFlows[key] = { weight: 0, type };
+      futureFlows[key].weight += weight;
+    });
+  });
+  const futureNodes = {};
+  let fy = PAD_TOP;
+  // Human roles first
+  Object.keys(FUTURE_ROLES).filter(k => futureFlows[k]).forEach(k => {
+    const h = Math.max(18, futureFlows[k].weight * SCALE);
+    futureNodes[k] = { y: fy, h, consumed: 0, type: "human" };
+    fy += h + NGAP;
+  });
+  if (Object.keys(FUTURE_ROLES).some(k=>futureFlows[k]) && Object.keys(AI_SYSTEMS).some(k=>futureFlows[k])) fy += 14;
+  // AI systems
+  Object.keys(AI_SYSTEMS).filter(k => futureFlows[k]).forEach(k => {
+    const h = Math.max(18, futureFlows[k].weight * SCALE);
+    futureNodes[k] = { y: fy, h, consumed: 0, type: "ai" };
+    fy += h + NGAP;
+  });
+
+  const totalH = Math.max(ay, ry, fy) + 20;
+
+  // === Build links ===
+  const links = [];
+  filteredActs.forEach(act => {
+    const aNode = actNodes[act.id];
+    const validRoles = act.roles.filter(r => activeRoles.has(r));
+    if (!validRoles.length) return;
+    const perRole = act.weight / validRoles.length;
+
+    // Role → Activity links
+    validRoles.forEach(r => {
+      const rNode = roleNodes[r];
+      if (!rNode) return;
+      const w = Math.max(1.5, perRole * SCALE);
+      links.push({
+        type: "r2a",
+        color: ARCHETYPES[act.arch].color,
+        x0: CA_R, y0a: rNode.y + rNode.consumed, y0b: rNode.y + rNode.consumed + w,
+        x1: CB_L, y1a: aNode.y + aNode.consumed_left, y1b: aNode.y + aNode.consumed_left + w,
+        arch: act.arch, actName: act.name, roleName: r, weight: perRole.toFixed(1)
+      });
+      rNode.consumed += w;
+      aNode.consumed_left += w;
+    });
+
+    // Activity → Future links
+    getFutureFlows(act).forEach(({ key, weight, type }) => {
+      const fNode = futureNodes[key];
+      if (!fNode) return;
+      const w = Math.max(1.5, weight * SCALE);
+      const futTitle = resolveTitle(key, type);
+      links.push({
+        type: "a2f",
+        color: ARCHETYPES[act.arch].color,
+        x0: CB_R, y0a: aNode.y + aNode.consumed_right, y0b: aNode.y + aNode.consumed_right + w,
+        x1: CC_L, y1a: fNode.y + fNode.consumed, y1b: fNode.y + fNode.consumed + w,
+        arch: act.arch, actName: act.name, futureName: futTitle, futureType: type, weight: weight.toFixed(1)
+      });
+      aNode.consumed_right += w;
+      fNode.consumed += w;
+    });
+  });
+
+  // === Render SVG ===
+  let svgContent = "";
+
+  // Column header labels
+  svgContent += `<text x="${(CA_L+CA_R)/2}" y="14" text-anchor="middle" class="sankey-col-label" font-family="monospace" font-size="9" fill="#8b8fa4" letter-spacing="1.5">CURRENT ROLES</text>`;
+  svgContent += `<text x="${(CB_L+CB_R)/2}" y="14" text-anchor="middle" class="sankey-col-label" font-family="monospace" font-size="9" fill="#8b8fa4" letter-spacing="1.5">ACTIVITIES</text>`;
+  svgContent += `<text x="${(CC_L+CC_R)/2}" y="14" text-anchor="middle" class="sankey-col-label" font-family="monospace" font-size="9" fill="#8b8fa4" letter-spacing="1.5">FUTURE STATE</text>`;
+
+  // Draw links (behind nodes)
+  links.forEach((lk, i) => {
+    const path = sankeyBand(lk.x0, lk.y0a, lk.y0b, lk.x1, lk.y1a, lk.y1b);
+    const info = lk.type === "r2a"
+      ? `data-role="${esc(lk.roleName)}" data-act="${esc(lk.actName)}" data-w="${lk.weight}"`
+      : `data-act="${esc(lk.actName)}" data-future="${esc(lk.futureName)}" data-ftype="${lk.futureType}" data-w="${lk.weight}"`;
+    svgContent += `<path d="${path}" fill="${lk.color}" fill-opacity="0.22" stroke="${lk.color}" stroke-opacity="0.12" stroke-width="0.5" class="sankey-link" data-link="${i}" data-arch="${lk.arch}" data-type="${lk.type}" ${info} style="cursor:pointer"/>`;
+  });
+
+  // Draw role nodes (Column A)
+  Object.entries(roleNodes).forEach(([role, n]) => {
+    const displayName = role.length > 22 ? role.replace(" / ", "/\n") : role;
+    svgContent += `<rect x="${CA_L}" y="${n.y}" width="${COL_W}" height="${n.h}" fill="#1f1f30" stroke="#3a3a50" stroke-width="0.8" rx="2" class="sankey-node" data-role="${esc(role)}" style="cursor:pointer"/>`;
+    if (n.h >= 14) {
+      const lines = wrapText(role, 20);
+      const lineH = 12;
+      const totalTH = lines.length * lineH;
+      const startY = n.y + (n.h - totalTH) / 2 + 10;
+      lines.forEach((line, li) => {
+        svgContent += `<text x="${CA_L + COL_W/2}" y="${startY + li*lineH}" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b8bcce" style="pointer-events:none">${esc(line)}</text>`;
+      });
+    }
+  });
+
+  // Draw activity nodes (Column B)
+  filteredActs.forEach(act => {
+    const n = actNodes[act.id];
+    const c = ARCHETYPES[act.arch].color;
+    svgContent += `<rect x="${CB_L}" y="${n.y}" width="140" height="${n.h}" fill="${c}" fill-opacity="0.15" stroke="${c}" stroke-opacity="0.6" stroke-width="0.8" rx="1" class="sankey-node" data-act="${esc(act.id)}" style="cursor:pointer"/>`;
+    if (n.h >= 14) {
+      const label = act.name.length > 32 ? act.name.slice(0,30)+"…" : act.name;
+      svgContent += `<text x="${CB_L+70}" y="${n.y + n.h/2 + 4}" text-anchor="middle" font-family="sans-serif" font-size="9.5" fill="${c}" style="pointer-events:none">${esc(label)}</text>`;
+    }
+  });
+
+  // Draw future nodes (Column C)
+  // Divider label between human and AI
+  const firstAIKey = Object.keys(AI_SYSTEMS).find(k => futureNodes[k]);
+  if (firstAIKey) {
+    const firstAIY = futureNodes[firstAIKey].y;
+    const lastHumanKey = Object.keys(FUTURE_ROLES).filter(k=>futureNodes[k]).pop();
+    if (lastHumanKey) {
+      const divY = futureNodes[lastHumanKey].y + futureNodes[lastHumanKey].h + 7;
+      svgContent += `<text x="${CC_L + COL_W/2}" y="${divY}" text-anchor="middle" font-family="monospace" font-size="8" fill="#5a5a75" letter-spacing="1">── AI SYSTEMS ──</text>`;
+    }
+  }
+
+  Object.entries(futureNodes).forEach(([key, n]) => {
+    const isHuman = n.type === "human";
+    const title = resolveTitle(key, isHuman ? "human" : "ai");
+    const fillColor = isHuman ? "rgba(232,99,26,0.12)" : "rgba(58,143,212,0.12)";
+    const strokeColor = isHuman ? "rgba(232,99,26,0.5)" : "rgba(58,143,212,0.5)";
+    const textColor = isHuman ? "#e8631a" : "#5aa8d8";
+    svgContent += `<rect x="${CC_L}" y="${n.y}" width="${COL_W}" height="${n.h}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="0.8" rx="2" class="sankey-node" data-future="${esc(key)}" data-ftype="${n.type}" style="cursor:pointer"/>`;
+    if (n.h >= 14 && title) {
+      const lines = wrapText(title, 20);
+      const lineH = 12;
+      const totalTH = lines.length * lineH;
+      const startY = n.y + (n.h - totalTH) / 2 + 10;
+      lines.forEach((line, li) => {
+        svgContent += `<text x="${CC_L + COL_W/2}" y="${startY + li*lineH}" text-anchor="middle" font-family="sans-serif" font-size="10" fill="${textColor}" style="pointer-events:none">${esc(line)}</text>`;
+      });
+    }
+  });
+
+  svg.innerHTML = svgContent;
+  svg.setAttribute("viewBox", `0 0 ${SVG_W} ${totalH}`);
+  svg.setAttribute("width", "100%");
+  svg.setAttribute("height", totalH);
+
+  // Attach tooltip events
+  attachSankeyEvents();
+}
+
+function sankeyBand(x0, y0a, y0b, x1, y1a, y1b) {
+  const cpX = (x1 - x0) * 0.45;
+  return [
+    `M${x0} ${y0a}`,
+    `C${x0+cpX} ${y0a} ${x1-cpX} ${y1a} ${x1} ${y1a}`,
+    `L${x1} ${y1b}`,
+    `C${x1-cpX} ${y1b} ${x0+cpX} ${y0b} ${x0} ${y0b}`,
+    "Z"
+  ].join(" ");
+}
+
+function wrapText(text, maxChars) {
+  const words = text.split(" ");
+  const lines = [];
+  let current = "";
+  words.forEach(w => {
+    if ((current + " " + w).trim().length > maxChars) {
+      if (current) lines.push(current.trim());
+      current = w;
+    } else {
+      current = (current + " " + w).trim();
+    }
+  });
+  if (current) lines.push(current.trim());
+  return lines;
+}
+
+function attachSankeyEvents() {
+  const tt = document.getElementById("tooltip");
+  const ttTitle = document.getElementById("tt-title");
+  const ttBody = document.getElementById("tt-body");
+
+  document.querySelectorAll(".sankey-link").forEach(el => {
+    el.addEventListener("mouseenter", (e) => {
+      const arch = ARCHETYPES[el.dataset.arch];
+      if (el.dataset.type === "r2a") {
+        ttTitle.textContent = el.dataset.act;
+        ttBody.innerHTML = `<span class="tooltip-arch" style="color:${arch.color}">${arch.label}</span><br>From: ${el.dataset.role}<br>Weight: ${el.dataset.w}`;
+      } else {
+        ttTitle.textContent = el.dataset.act;
+        const fColor = el.dataset.ftype === "human" ? "#e8631a" : "#5aa8d8";
+        ttBody.innerHTML = `<span class="tooltip-arch" style="color:${arch.color}">${arch.label}</span><br>To: <span style="color:${fColor}">${el.dataset.future}</span><br>Flow: ${el.dataset.w}`;
+      }
+      tt.classList.add("visible");
+      el.setAttribute("fill-opacity","0.45");
+    });
+    el.addEventListener("mousemove", (e) => {
+      tt.style.left = (e.clientX + 14) + "px";
+      tt.style.top = (e.clientY - 10) + "px";
+    });
+    el.addEventListener("mouseleave", () => {
+      tt.classList.remove("visible");
+      el.setAttribute("fill-opacity","0.22");
+    });
+  });
+
+  document.querySelectorAll(".sankey-node").forEach(el => {
+    el.addEventListener("mouseenter", (e) => {
+      if (el.dataset.role) {
+        const role = el.dataset.role;
+        const acts = ACTIVITIES.filter(a => a.roles.includes(role) && activeArchetypes.has(a.arch));
+        ttTitle.textContent = role;
+        ttBody.innerHTML = `${acts.length} activities · ${acts.reduce((s,a)=>s+a.weight/a.roles.length,0).toFixed(1)} total weight`;
+      } else if (el.dataset.act) {
+        const act = ACTIVITIES.find(a => a.id === el.dataset.act);
+        if (act) {
+          ttTitle.textContent = act.name;
+          const arch = ARCHETYPES[act.arch];
+          ttBody.innerHTML = `<span class="tooltip-arch" style="color:${arch.color}">${arch.label}</span><br>Weight: ${act.weight}<br>${act.roles.join(", ")}`;
+        }
+      } else if (el.dataset.future) {
+        const key = el.dataset.future;
+        const isHuman = el.dataset.ftype === "human";
+        const def = isHuman ? FUTURE_ROLES[key] : AI_SYSTEMS[key];
+        const defInterim = isHuman ? INTERIM_FUTURE_ROLES[key] : INTERIM_AI_SYSTEMS[key];
+        const activeTitle = resolveTitle(key, isHuman ? "human" : "ai");
+        const activeRole  = (globalViewState === "INTERIM" && defInterim) ? defInterim.theRole : (def?.theRole || "");
+        if (def) {
+          ttTitle.textContent = activeTitle;
+          ttBody.innerHTML = `<em style="color:var(--muted)">${activeRole}</em>${globalViewState === "INTERIM" ? '<br><span style="font-family:monospace;font-size:9px;color:#e8ab1a">NEAR-TERM VIEW</span>' : ''}`;
+        }
+      }
+      tt.classList.add("visible");
+    });
+    el.addEventListener("mousemove", (e) => {
+      tt.style.left = (e.clientX + 14) + "px";
+      tt.style.top = (e.clientY - 10) + "px";
+    });
+    el.addEventListener("mouseleave", () => tt.classList.remove("visible"));
+  });
+}
+
+// ============================================================
+// SECTION 04: FUTURE ROLE CARDS  (maturation journey view)
+// ============================================================
+let roleViewState = "FUTURE"; // kept for compat but cards now always show both
+let sysViewState  = "FUTURE";
+
+function setRoleState(s){ roleViewState = s; renderRoleCards(); }
+function setSysState(s){ sysViewState = s; renderSystemCards(); }
+
+function renderRoleCards() {
+  const container = document.getElementById("role-cards");
+  container.innerHTML = Object.keys(FUTURE_ROLES).map(key => {
+    const futureRole  = FUTURE_ROLES[key];
+    const interimRole = INTERIM_FUTURE_ROLES[key];
+
+    const absorbsActs = ACTIVITIES.filter(a => a.future === key);
+    const systems = [...new Set(
+      absorbsActs.filter(a => a.futureSystem && ["AGENTIC","AUGMENTED"].includes(a.arch)).map(a => a.futureSystem)
+    )];
+    const actTags = absorbsActs.map(a =>
+      `<span class="tag" style="border-color:${ARCHETYPES[a.arch].color}33;color:${ARCHETYPES[a.arch].color}cc" title="${esc(a.rationale)}">${esc(a.name)}</span>`
+    ).join("");
+    const sysTags = systems.map(sk =>
+      `<span class="tag ai-tag">${esc(AI_SYSTEMS[sk]?.title || sk)}</span>`
+    ).join("");
+
+    const compromisesHtml = interimRole?.compromises
+      ? `<div style="margin-top:.65rem">
+          <div class="mat-compromises-label">Compromises vs. Full Future</div>
+          ${interimRole.compromises.map(c => `<div class="compromise-item">${esc(c)}</div>`).join("")}
+        </div>`
+      : "";
+
+    return `<div class="mat-card">
+      <div class="mat-interim-layer">
+        <div class="mat-interim-eyebrow">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#e8ab1a"></span>
+          Near-Term &nbsp;·&nbsp; 2026–2028
+        </div>
+        <div class="mat-interim-title">${esc(interimRole?.title || futureRole.title)}</div>
+        <div class="mat-interim-role">${esc(interimRole?.theRole || futureRole.theRole)}</div>
+        ${compromisesHtml}
+      </div>
+      <div class="mat-arrow">
+        <div class="mat-arrow-line"></div>
+        <span class="mat-arrow-label">Matures Into</span>
+        <div class="mat-arrow-line"></div>
+        <span class="mat-arrow-chevron">▶</span>
+      </div>
+      <div class="mat-future-layer">
+        <div class="mat-future-eyebrow">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold)"></span>
+          Full Future &nbsp;·&nbsp; 2030+
+        </div>
+        <div class="mat-future-title">${esc(futureRole.title)}</div>
+        <div class="mat-future-role-line">${esc(futureRole.theRole)}</div>
+        <div class="mat-future-shift">${esc(futureRole.theShift)}</div>
+        ${actTags ? `<div class="card-section">
+          <div class="card-section-label mono">Absorbs from current roles</div>
+          ${actTags}
+        </div>` : ""}
+        ${sysTags ? `<div class="card-section">
+          <div class="card-section-label mono">Works alongside</div>
+          ${sysTags}
+        </div>` : ""}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ============================================================
+// SECTION 05: AI SYSTEM CARDS  (maturation journey view)
+// ============================================================
+function renderSystemCards() {
+  const container = document.getElementById("system-cards");
+  container.innerHTML = Object.keys(AI_SYSTEMS).map(key => {
+    const fullSys    = AI_SYSTEMS[key];
+    const interimSys = INTERIM_AI_SYSTEMS[key];
+    const archClass  = archBadgeClass(fullSys.archetype);
+    const arch       = ARCHETYPES[fullSys.archetype];
+
+    const absorbsActs = ACTIVITIES.filter(a => a.futureSystem === key);
+    const humanRoles  = [...new Set(
+      ACTIVITIES.filter(a => {
+        const flows = getFutureFlows(a);
+        return flows.some(f => f.type === "human") && a.futureSystem === key;
+      }).map(a => a.future)
+    )];
+    const actTags = absorbsActs.map(a =>
+      `<span class="tag" style="border-color:${ARCHETYPES[a.arch].color}33;color:${ARCHETYPES[a.arch].color}cc">${esc(a.name)}</span>`
+    ).join("");
+    const humanTags = humanRoles.map(k =>
+      `<span class="tag human-tag">${esc(FUTURE_ROLES[k]?.title || k)}</span>`
+    ).join("");
+
+    const nearTermScopeHtml = interimSys?.nearTermScope
+      ? `<div style="margin-top:.65rem">
+          <div class="nearterm-label">In Scope Now (2026–2028)</div>
+          ${interimSys.nearTermScope.map(s => `<div class="list-item-green">${esc(s)}</div>`).join("")}
+        </div>
+        <div style="margin-top:.6rem">
+          <div class="wait-label">Deferred to Phase 2 (2028+)</div>
+          ${interimSys.mustWait.map(s => `<div class="list-item-grey">${esc(s)}</div>`).join("")}
+        </div>`
+      : "";
+
+    const interimArchClass = archBadgeClass(interimSys?.archetype || fullSys.archetype);
+    const interimArch = ARCHETYPES[interimSys?.archetype || fullSys.archetype];
+
+    return `<div class="mat-card">
+      <div class="mat-interim-layer">
+        <div class="mat-interim-eyebrow">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#e8ab1a"></span>
+          Near-Term · 2026–2028
+          <span class="arch-badge ${interimArchClass}" style="margin-left:.25rem">${esc(interimArch.label)}</span>
+        </div>
+        <div class="mat-interim-title">${esc(interimSys?.title || fullSys.title)}</div>
+        <div class="mat-interim-role">${esc(interimSys?.theRole || fullSys.theRole)}</div>
+        ${nearTermScopeHtml}
+      </div>
+      <div class="mat-arrow">
+        <div class="mat-arrow-line"></div>
+        <span class="mat-arrow-label">Matures Into</span>
+        <div class="mat-arrow-line"></div>
+        <span class="mat-arrow-chevron">▶</span>
+      </div>
+      <div class="mat-future-layer">
+        <div class="mat-future-eyebrow">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${arch.color}"></span>
+          Full System Scope · 2030+
+          <span class="arch-badge ${archClass}" style="margin-left:.25rem">${esc(arch.label)}</span>
+        </div>
+        <div class="mat-future-title">${esc(fullSys.title)}</div>
+        <div class="mat-future-role-line">${esc(fullSys.theRole)}</div>
+        <div class="mat-future-shift">${esc(fullSys.theShift)}</div>
+        ${actTags ? `<div class="card-section">
+          <div class="card-section-label mono">Absorbs these activities</div>
+          ${actTags}
+        </div>` : ""}
+        ${humanTags ? `<div class="card-section">
+          <div class="card-section-label mono">Human roles it supports</div>
+          ${humanTags}
+        </div>` : ""}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+// ============================================================
+// SECTION 06: ACTIVITY LEDGER
+// ============================================================
+let ledgerArchFilter = "ALL";
+let ledgerSort = { col: "weight", dir: -1 };
+
+document.querySelectorAll("[data-ledger-arch]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    ledgerArchFilter = btn.dataset.ledgerArch;
+    document.querySelectorAll("[data-ledger-arch]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderLedger();
+  });
+});
+
+function renderLedger() {
+  const tbody = document.getElementById("ledger-tbody");
+
+  let acts = ledgerArchFilter === "ALL" ? [...ACTIVITIES] : ACTIVITIES.filter(a => a.arch === ledgerArchFilter);
+
+  acts.sort((a, b) => {
+    if (ledgerSort.col === "weight") return (b.weight - a.weight) * ledgerSort.dir * -1;
+    if (ledgerSort.col === "arch") return a.arch.localeCompare(b.arch) * ledgerSort.dir;
+    if (ledgerSort.col === "name") return a.name.localeCompare(b.name) * ledgerSort.dir;
+    return 0;
+  });
+
+  const totalWeight = ACTIVITIES.reduce((s,a)=>s+a.weight,0);
+
+  tbody.innerHTML = acts.map(act => {
+    const arch = ARCHETYPES[act.arch];
+    const flows = getFutureFlows(act);
+    const futureLabels = flows.map(f => {
+      const isHuman = f.type === "human";
+      const title = resolveTitle(f.key, f.type);
+      const cls = isHuman ? "future-human" : "future-ai";
+      const pct = flows.length > 1 ? ` <span style="color:var(--muted);font-size:10px">(${Math.round(f.weight/act.weight*100)}%)</span>` : "";
+      return `<span class="${cls}">${esc(title || f.key)}</span>${pct}`;
+    }).join("<br>");
+
+    const barW = Math.round(act.weight / 10 * 60);
+    return `<tr>
+      <td>${esc(act.name)}</td>
+      <td style="font-size:11px;color:var(--muted)">${act.roles.map(r=>`<span>${esc(r)}</span>`).join("<br>")}</td>
+      <td><span class="arch-badge ${archBadgeClass(act.arch)}">${esc(arch.label)}</span></td>
+      <td style="font-size:12px">${futureLabels}</td>
+      <td style="white-space:nowrap">${act.weight}<span class="weight-bar" style="width:${barW}px"></span></td>
+      <td><div class="rationale-text">${esc(act.rationale)}</div></td>
+    </tr>`;
+  }).join("");
+
+  // Sort headers
+  document.querySelectorAll("#ledger-table thead th[data-sort]").forEach(th => {
+    th.onclick = () => {
+      if (ledgerSort.col === th.dataset.sort) ledgerSort.dir *= -1;
+      else { ledgerSort.col = th.dataset.sort; ledgerSort.dir = 1; }
+      renderLedger();
+    };
+  });
+}
+
+// ============================================================
+// INIT: open first section by default
+// ============================================================
+(function init() {
+  const firstBody = document.getElementById("body-approach");
+  firstBody.classList.add("open");
+  firstBody.previousElementSibling.querySelector(".expand-lbl").textContent = "Collapse";
+})();
+</script>
+</body>
+</html>
