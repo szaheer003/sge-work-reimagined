@@ -223,6 +223,44 @@ tbody tr.highlighted{background:var(--paper-3)}
 </style>
 </head>
 <body>
+<style>
+#pw-gate{position:fixed;inset:0;background:#0f0f17;display:flex;align-items:center;justify-content:center;z-index:9999}
+.pw-box{border:1px solid #2a2a3a;padding:2.5rem 2rem;width:320px;text-align:center}
+.pw-box .pw-label{font-family:monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#e8631a;margin-bottom:1rem}
+.pw-box h2{font-family:Georgia,serif;font-size:22px;font-weight:500;color:#f7f7f8;margin-bottom:.35rem}
+.pw-box p{font-size:12px;color:#8b8fa4;margin-bottom:1.5rem}
+.pw-box input{width:100%;background:#1a1a26;border:1px solid #2a2a3a;color:#e8e8ed;font-family:monospace;font-size:14px;padding:.65rem .9rem;text-align:center;letter-spacing:.1em;outline:none;margin-bottom:.75rem}
+.pw-box input:focus{border-color:#e8631a}
+.pw-box button{width:100%;background:transparent;border:1px solid #e8631a;color:#e8631a;font-family:monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:.65rem;cursor:pointer;transition:background .15s}
+.pw-box button:hover{background:rgba(232,99,26,.1)}
+.pw-error{font-size:11px;color:#e8631a;margin-top:.6rem;min-height:16px;font-family:monospace}
+</style>
+
+<div id="pw-gate">
+  <div class="pw-box">
+    <div class="pw-label">SDG&amp;E · PwC</div>
+    <h2>Work Reimagined</h2>
+    <p>Contact Centre · Agentic AI Workforce Transformation</p>
+    <input type="password" id="pw-input" placeholder="Enter access code" onkeydown="if(event.key==='Enter')checkPW()">
+    <button onclick="checkPW()">Access →</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+
+<script>
+function checkPW(){
+  const v = document.getElementById('pw-input').value.trim().toLowerCase();
+  if(v === 'sgde2026'){
+    document.getElementById('pw-gate').style.display='none';
+  } else {
+    document.getElementById('pw-error').textContent='Incorrect code. Try again.';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+}
+document.getElementById('pw-input').focus();
+</script>
+
 <div class="tooltip" id="tooltip">
   <div class="tooltip-title" id="tt-title"></div>
   <div id="tt-body"></div>
